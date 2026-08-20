@@ -2,9 +2,8 @@
 
 **A browser-based illuminated reading experience for the King James Bible.**
 
-# Bible Illuminated combines the typography and atmosphere of a traditional printed Bible with the speed, portability and navigation of a modern web application.
+Bible Illuminated combines the typography and atmosphere of a traditional printed Bible with the speed, portability and navigation of a modern web application.
 
-https://bible-illuminated.barnestyson.workers.dev/
 <img width="2839" height="1440" alt="Screenshot_20260820_200818_Gallery" src="https://github.com/user-attachments/assets/8d9017dd-5dac-41ba-9ec0-ddcf53b961c7" />
 
 
