@@ -32,6 +32,8 @@ const searchStatus = document.querySelector("#searchStatus");
 const searchResults = document.querySelector("#searchResults");
 const chapterHeading = document.querySelector("#chapterHeading");
 const folioReference = document.querySelector("#folioReference");
+const titleDescription = document.querySelector("#titleDescription");
+const titleEdition = document.querySelector("#titleEdition");
 const bookKicker = document.querySelector("#bookKicker");
 const bookTitle = document.querySelector("#bookTitle");
 
@@ -324,6 +326,20 @@ async function render() {
       state.edition === "kjv1611"
         ? "1611"
         : "KJV";
+
+    if (state.edition === "kjv1611") {
+      titleDescription.innerHTML =
+        "Conteyning the Old Teſtament,<br>AND THE NEW";
+
+      titleEdition.textContent =
+        "King James Bible · 1611";
+    } else {
+      titleDescription.innerHTML =
+        "Containing the Old Testament,<br>AND THE NEW";
+
+      titleEdition.textContent =
+        "King James Version";
+    }
 
     compareButton.textContent =
       state.mode === "compare"
