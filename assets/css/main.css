@@ -1180,3 +1180,130 @@ body.text-large {
     letter-spacing: .06em;
   }
 }
+
+/* =========================================================
+   V1.1 RESPONSIVE HARDENING
+   Prevent UI children from forcing viewport overflow.
+   ========================================================= */
+
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+/*
+  Grid/flex children default to min-width:auto, which can
+  force otherwise-correct responsive layouts beyond the viewport.
+*/
+.app-bar > *,
+.app-actions,
+.app-title,
+.reader-controls > *,
+.search-form > *,
+.bookmark-item > *,
+.navigator-header > *,
+.search-header > *,
+.display-panel > header > *,
+.reference-panel > header > *,
+.bookmark-panel > header > * {
+  min-width: 0;
+}
+
+.app-title strong,
+.app-title span {
+  max-width: 100%;
+}
+
+/* Long canonical book names must remain inside their cells. */
+.book-button,
+.book-button small,
+.bookmark-reference,
+.search-result-reference {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+/* All overlay panels stay within the physical viewport. */
+.navigator-panel,
+.search-panel,
+.display-panel,
+.reference-panel,
+.bookmark-panel {
+  max-width: calc(100% - 20px);
+}
+
+/*
+  Bottom controls scale continuously rather than depending on
+  minimum column widths that can overflow narrow phones.
+*/
+@media (max-width: 430px) {
+  .reader-controls {
+    grid-template-columns:
+      40px
+      minmax(0, .82fr)
+      minmax(0, 1.25fr)
+      40px;
+  }
+
+  .reader-controls button {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+/* Extra-small / split-screen Android viewport. */
+@media (max-width: 360px) {
+  .app-bar {
+    grid-template-columns:
+      38px
+      minmax(0, 1fr)
+      auto;
+
+    gap: 4px;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
+  .app-button,
+  .app-actions .app-button {
+    width: 34px;
+    height: 38px;
+  }
+
+  .app-actions {
+    gap: 3px;
+  }
+
+  .reader-controls {
+    grid-template-columns:
+      38px
+      minmax(0, .78fr)
+      minmax(0, 1.22fr)
+      38px;
+
+    gap: 4px;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
+  .reader-controls button {
+    padding-left: 2px;
+    padding-right: 2px;
+
+    font-size: .61rem;
+    letter-spacing: .035em;
+  }
+
+  .book-grid {
+    gap: 6px;
+  }
+
+  .book-button {
+    padding-left: 8px;
+    padding-right: 8px;
+    font-size: .84rem;
+  }
+}
