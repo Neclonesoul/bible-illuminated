@@ -74,13 +74,20 @@
 }
 
 .title-page h1 {
-  margin: 4px 0 12px;
+  margin: 4px auto 12px;
 
-  font-size: clamp(2.35rem, 11vw, 5rem);
+  max-width: 100%;
+  padding-inline: .08em;
+
+  font-size: clamp(2rem, 9vw, 5rem);
   font-weight: 500;
   line-height: .95;
 
   letter-spacing: -.035em;
+
+  overflow-wrap: anywhere;
+  word-break: normal;
+  text-wrap: balance;
 }
 
 .title-description {
@@ -542,10 +549,12 @@ body.page-reading .chapter-heading {
   .title-page h1 {
     font-size:
       clamp(
-        2.15rem,
-        10vw,
-        3.45rem
+        1.7rem,
+        8.2vw,
+        3.15rem
       );
+
+    line-height: 1;
   }
 
   .title-description {
