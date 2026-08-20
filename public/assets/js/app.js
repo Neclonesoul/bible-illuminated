@@ -1289,7 +1289,19 @@ applyCompareDensity(
 const pageStyleButtons =
   document.querySelectorAll("[data-page-style]");
 
+const PAGE_STYLES =
+  new Set([
+    "folio",
+    "reading",
+    "nocturne"
+  ]);
+
 function applyPageStyle(style) {
+  const safeStyle =
+    PAGE_STYLES.has(style)
+      ? style
+      : "folio";
+
   document.body.classList.remove(
     "page-folio",
     "page-reading",
@@ -1297,18 +1309,18 @@ function applyPageStyle(style) {
   );
 
   document.body.classList.add(
-    `page-${style}`
+    `page-${safeStyle}`
   );
 
   localStorage.setItem(
     "bible-illuminated-page-style",
-    style
+    safeStyle
   );
 
   for (const button of pageStyleButtons) {
     button.classList.toggle(
       "active",
-      button.dataset.pageStyle === style
+      button.dataset.pageStyle === safeStyle
     );
   }
 }

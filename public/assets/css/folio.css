@@ -377,32 +377,6 @@ body.page-reading .chapter-heading {
   padding-top: 8px;
 }
 
-body.page-nocturne {
-  --ink: #ded0b2;
-  --muted-ink: #9f8c69;
-  --paper: #1d1812;
-  --paper-deep: #12100d;
-  --paper-light: #251e16;
-  --rule: #66543b;
-  --accent: #b26252;
-
-  background:
-    radial-gradient(
-      circle at 50% 0%,
-      #292117,
-      #0e0c09 68%
-    );
-}
-
-body.page-nocturne .folio {
-  background:
-    radial-gradient(
-      ellipse at 50% 10%,
-      #2b2319,
-      #1b1711 58%,
-      #12100d
-    );
-}
 
 /* =========================================================
    CHAPTER OPENING DEVICE
