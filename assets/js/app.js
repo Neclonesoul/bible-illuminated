@@ -126,10 +126,30 @@ function openVerseComparison(number) {
   render();
 }
 
+function splitOpeningText(text) {
+  const decoded = decodeEntities(text);
+
+  const match = decoded.match(/^(\s*¶?\s*)([A-Za-zÀ-ÿ])([\s\S]*)$/);
+
+  if (!match) {
+    return {
+      prefix: "",
+      initial: "",
+      rest: decoded
+    };
+  }
+
+  return {
+    prefix: match[1],
+    initial: match[2],
+    rest: match[3]
+  };
+}
+
 function renderVerses(verses) {
   scripture.replaceChildren();
 
-  for (const verse of verses) {
+  verses.forEach((verse, index) => {
     const span = document.createElement("span");
 
     span.className = "verse";
@@ -142,28 +162,82 @@ function renderVerses(verses) {
 
     span.append(number);
 
-    span.append(
-      document.createTextNode(
-        decodeEntities(verse.t) + " "
-      )
-    );
+    const decoded =
+      decodeEntities(verse.t);
 
-    span.addEventListener("click", () => {
-      openVerseComparison(verse.v);
-    });
+    if (index === 0) {
+      const opening =
+        splitOpeningText(decoded);
 
-    span.addEventListener("keydown", event => {
-      if (
-        event.key === "Enter" ||
-        event.key === " "
-      ) {
-        event.preventDefault();
+      if (opening.prefix) {
+        const prefix =
+          document.createElement("span");
+
+        prefix.className =
+          "opening-mark";
+
+        prefix.textContent =
+          opening.prefix;
+
+        span.append(prefix);
+      }
+
+      if (opening.initial) {
+        const initial =
+          document.createElement("span");
+
+        initial.className =
+          state.edition === "kjv1611"
+            ? "illuminated-initial"
+            : "drop-initial";
+
+        initial.textContent =
+          opening.initial;
+
+        span.append(initial);
+
+        span.append(
+          document.createTextNode(
+            opening.rest + " "
+          )
+        );
+      } else {
+        span.append(
+          document.createTextNode(
+            decoded + " "
+          )
+        );
+      }
+    } else {
+      span.append(
+        document.createTextNode(
+          decoded + " "
+        )
+      );
+    }
+
+    span.addEventListener(
+      "click",
+      () => {
         openVerseComparison(verse.v);
       }
-    });
+    );
+
+    span.addEventListener(
+      "keydown",
+      event => {
+        if (
+          event.key === "Enter" ||
+          event.key === " "
+        ) {
+          event.preventDefault();
+          openVerseComparison(verse.v);
+        }
+      }
+    );
 
     scripture.append(span);
-  }
+  });
 }
 
 function findVerse(verses, number) {

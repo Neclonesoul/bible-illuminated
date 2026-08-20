@@ -396,3 +396,164 @@ body.page-nocturne .folio {
       #12100d
     );
 }
+
+/* =========================================================
+   CHAPTER OPENING DEVICE
+   ========================================================= */
+
+.chapter-heading {
+  position: relative;
+
+  margin-top: 6px;
+  padding:
+    28px
+    34px
+    30px;
+}
+
+.chapter-heading::before,
+.chapter-heading::after {
+  content: "";
+
+  position: absolute;
+
+  top: 50%;
+
+  width: 21%;
+  height: 8px;
+
+  transform: translateY(-50%);
+
+  opacity: .70;
+}
+
+.chapter-heading::before {
+  left: 0;
+
+  background:
+    linear-gradient(
+      to right,
+      transparent,
+      var(--rule)
+    );
+}
+
+.chapter-heading::after {
+  right: 0;
+
+  background:
+    linear-gradient(
+      to left,
+      transparent,
+      var(--rule)
+    );
+}
+
+.chapter-heading h2 {
+  position: relative;
+}
+
+.chapter-heading h2::before {
+  content: "❦";
+
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: var(--accent);
+
+  font-family:
+    var(--historical-face, Georgia, serif);
+
+  font-size: .42em;
+  line-height: 1;
+}
+
+/* KJV receives the structure without excessive historicism */
+
+body[data-edition="kjv"] .chapter-heading h2::before {
+  content: "✦";
+
+  font-family: Georgia, serif;
+
+  font-size: .28em;
+}
+
+/* Reading mode removes most ornament */
+
+body.page-reading .chapter-heading::before,
+body.page-reading .chapter-heading::after,
+body.page-reading .chapter-heading h2::before {
+  display: none;
+}
+
+body.page-reading .chapter-heading {
+  padding:
+    10px
+    12px
+    22px;
+}
+
+@media (max-width: 480px) {
+  .chapter-heading {
+    padding:
+      22px
+      24px
+      25px;
+  }
+
+  .chapter-heading::before,
+  .chapter-heading::after {
+    width: 15%;
+  }
+}
+
+/* =========================================================
+   FOLIO READING ERGONOMICS
+   ========================================================= */
+
+.title-page {
+  padding-top: 12px;
+  padding-bottom: 18px;
+}
+
+.title-page h1 {
+  margin-top: 3px;
+  margin-bottom: 8px;
+}
+
+.title-cross {
+  margin:
+    12px
+    0
+    9px;
+}
+
+.ornamental-rule {
+  height: 28px;
+}
+
+/*
+  On phone portrait the page still feels ceremonial,
+  without consuming most of the first screen.
+*/
+
+@media (max-width: 600px) {
+  .title-page h1 {
+    font-size:
+      clamp(
+        2.15rem,
+        10vw,
+        3.45rem
+      );
+  }
+
+  .title-description {
+    font-size:
+      clamp(
+        .87rem,
+        3.5vw,
+        1.05rem
+      );
+  }
+}
