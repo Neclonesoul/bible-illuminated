@@ -752,3 +752,131 @@ body.text-large {
   box-shadow:
     inset 0 0 0 1px var(--accent);
 }
+
+.reference-overlay[hidden] {
+  display: none;
+}
+
+.reference-overlay {
+  position: fixed;
+  z-index: 150;
+  inset: 0;
+}
+
+.reference-backdrop {
+  position: absolute;
+  inset: 0;
+
+  background: rgba(7,6,4,.78);
+  backdrop-filter: blur(5px);
+}
+
+.reference-panel {
+  position: absolute;
+
+  left: 12px;
+  right: 12px;
+  top: max(86px, env(safe-area-inset-top));
+
+  max-width: 520px;
+  margin: 0 auto;
+
+  background: var(--paper);
+  color: var(--ink);
+
+  border: 1px solid var(--rule);
+
+  box-shadow:
+    0 24px 80px rgba(0,0,0,.6);
+}
+
+.reference-panel > header {
+  min-height: 64px;
+  padding: 12px 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-bottom:
+    1px solid rgba(89,66,39,.3);
+}
+
+.reference-panel header strong {
+  display: block;
+
+  font-size: .82rem;
+  letter-spacing: .16em;
+}
+
+.reference-panel header span {
+  display: block;
+  margin-top: 4px;
+
+  color: var(--muted-ink);
+
+  font-size: .62rem;
+}
+
+.reference-panel header button {
+  width: 42px;
+  height: 42px;
+
+  border:
+    1px solid rgba(89,66,39,.4);
+
+  background: transparent;
+  color: var(--ink);
+
+  font-size: 1.4rem;
+}
+
+#referenceForm {
+  padding: 14px;
+
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 7px;
+}
+
+#referenceForm input {
+  min-width: 0;
+  min-height: 46px;
+
+  padding: 0 12px;
+
+  border:
+    1px solid rgba(89,66,39,.5);
+
+  background: rgba(255,255,255,.14);
+  color: var(--ink);
+
+  font: inherit;
+  font-size: 1rem;
+}
+
+#referenceForm button {
+  min-height: 46px;
+  padding: 0 15px;
+
+  border: 1px solid var(--accent);
+
+  background: var(--accent);
+  color: var(--paper-light);
+
+  font-size: .68rem;
+  letter-spacing: .12em;
+}
+
+#referenceStatus {
+  margin: 0;
+  padding:
+    0
+    14px
+    14px;
+
+  color: var(--muted-ink);
+
+  font-size: .66rem;
+  line-height: 1.4;
+}

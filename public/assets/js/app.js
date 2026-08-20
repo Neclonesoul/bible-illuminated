@@ -4,13 +4,37 @@ import {
 } from "./bible.js";
 
 import { searchBible } from "./search.js";
+import { saveState, loadState, loadBookmarks, saveBookmarks } from "./storage.js";
+import { parseRoute, updateRoute } from "./router.js";
+
+const restoredState = loadState();
+
+const routeState = parseRoute();
 
 const state = {
-  edition: "kjv1611",
-  book: "John",
-  chapter: 3,
-  verse: 16,
-  mode: "read"
+  edition:
+    routeState.edition ||
+    restoredState?.edition ||
+    "kjv1611",
+
+  book:
+    routeState.book ||
+    restoredState?.book ||
+    "John",
+
+  chapter:
+    routeState.chapter ||
+    restoredState?.chapter ||
+    3,
+
+  verse:
+    routeState.verse ||
+    restoredState?.verse ||
+    16,
+
+  mode:
+    restoredState?.mode ||
+    "read"
 };
 
 const scripture = document.querySelector("#scripture");
@@ -20,6 +44,14 @@ const previousChapter = document.querySelector("#previousChapter");
 const nextChapter = document.querySelector("#nextChapter");
 const themeButton = document.querySelector("#themeButton");
 const booksButton = document.querySelector("#booksButton");
+
+const referenceButton = document.querySelector("#referenceButton");
+const referenceOverlay = document.querySelector("#referenceOverlay");
+const referenceBackdrop = document.querySelector("#referenceBackdrop");
+const referenceClose = document.querySelector("#referenceClose");
+const referenceForm = document.querySelector("#referenceForm");
+const referenceInput = document.querySelector("#referenceInput");
+const referenceStatus = document.querySelector("#referenceStatus");
 
 const searchButton = document.querySelector("#searchButton");
 const searchOverlay = document.querySelector("#searchOverlay");
@@ -379,6 +411,9 @@ async function render() {
     state.mode === "compare"
   );
 
+  saveState(state);
+  updateRoute(state, true);
+
   document.body.dataset.edition =
     state.edition;
 
@@ -582,6 +617,113 @@ async function performSearch(query) {
         error.message;
     }
   }
+}
+
+
+function parseReferenceInput(value) {
+  const input = value.trim();
+
+  const match =
+    input.match(/^(.+?)\s+(\d+)(?::(\d+))?$/);
+
+  if (!match) {
+    return null;
+  }
+
+  return {
+    book: match[1].trim(),
+    chapter: Number(match[2]),
+    verse: match[3]
+      ? Number(match[3])
+      : 1
+  };
+}
+
+async function openReference(value) {
+  const parsed =
+    parseReferenceInput(value);
+
+  if (!parsed) {
+    referenceStatus.textContent =
+      "Use a reference such as John 3:16 or Psalms 23.";
+
+    return false;
+  }
+
+  const books =
+    await loadBookIndex(
+      state.edition
+    );
+
+  const entry =
+    books.find(
+      item =>
+        item.book.toLowerCase() ===
+        parsed.book.toLowerCase()
+    );
+
+  if (!entry) {
+    referenceStatus.textContent =
+      "Book not found in this edition.";
+
+    return false;
+  }
+
+  if (
+    parsed.chapter < 1 ||
+    parsed.chapter > entry.chapters
+  ) {
+    referenceStatus.textContent =
+      "Chapter not found.";
+
+    return false;
+  }
+
+  const chapter =
+    await loadChapter(
+      state.edition,
+      entry.book,
+      parsed.chapter
+    );
+
+  const verse =
+    chapter.verses.find(
+      item =>
+        Number(item.v) ===
+        parsed.verse
+    );
+
+  if (!verse) {
+    referenceStatus.textContent =
+      "Verse not found.";
+
+    return false;
+  }
+
+  state.book = entry.book;
+  state.chapter = parsed.chapter;
+  state.verse = parsed.verse;
+  state.mode = "read";
+
+  referenceOverlay.hidden = true;
+
+  await render();
+
+  setTimeout(() => {
+    const el =
+      scripture.querySelector(
+        `[data-verse="${state.verse}"]`
+      );
+
+    if (el) {
+      el.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+    }
+  }, 100);
+
+  return true;
 }
 
 async function openNavigator() {
@@ -836,6 +978,76 @@ searchForm.addEventListener(
     if (query) {
       performSearch(query);
     }
+  }
+);
+
+
+
+referenceButton?.addEventListener(
+  "click",
+  () => {
+    referenceOverlay.hidden = false;
+
+    referenceInput.value =
+      `${state.book} ${state.chapter}:${state.verse}`;
+
+    setTimeout(() => {
+      referenceInput.focus();
+      referenceInput.select();
+    }, 50);
+  }
+);
+
+referenceClose?.addEventListener(
+  "click",
+  () => {
+    referenceOverlay.hidden = true;
+  }
+);
+
+referenceBackdrop?.addEventListener(
+  "click",
+  () => {
+    referenceOverlay.hidden = true;
+  }
+);
+
+referenceForm?.addEventListener(
+  "submit",
+  async event => {
+    event.preventDefault();
+
+    referenceStatus.textContent =
+      "Opening reference…";
+
+    await openReference(
+      referenceInput.value
+    );
+  }
+);
+
+window.addEventListener(
+  "popstate",
+  () => {
+    const route = parseRoute();
+
+    if (route.book) {
+      state.book = route.book;
+    }
+
+    if (route.chapter) {
+      state.chapter = route.chapter;
+    }
+
+    if (route.verse) {
+      state.verse = route.verse;
+    }
+
+    if (route.edition) {
+      state.edition = route.edition;
+    }
+
+    render();
   }
 );
 
