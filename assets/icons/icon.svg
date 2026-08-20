@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 512 512">
+
+  <rect width="512"
+        height="512"
+        rx="64"
+        fill="#15120e"/>
+
+  <rect x="42"
+        y="42"
+        width="428"
+        height="428"
+        rx="8"
+        fill="#e8dcc1"
+        stroke="#756044"
+        stroke-width="12"/>
+
+  <rect x="62"
+        y="62"
+        width="388"
+        height="388"
+        fill="none"
+        stroke="#756044"
+        stroke-width="4"/>
+
+  <text x="256"
+        y="188"
+        text-anchor="middle"
+        font-family="serif"
+        font-size="54"
+        fill="#19140d"
+        letter-spacing="8">
+    HOLY
+  </text>
+
+  <text x="256"
+        y="255"
+        text-anchor="middle"
+        font-family="serif"
+        font-size="64"
+        fill="#19140d"
+        letter-spacing="3">
+    BIBLE
+  </text>
+
+  <text x="256"
+        y="326"
+        text-anchor="middle"
+        font-family="serif"
+        font-size="52"
+        fill="#6d1c17">
+    ✠
+  </text>
+
+  <text x="256"
+        y="385"
+        text-anchor="middle"
+        font-family="serif"
+        font-size="24"
+        fill="#675947"
+        letter-spacing="5">
+    1611
+  </text>
+
+</svg>

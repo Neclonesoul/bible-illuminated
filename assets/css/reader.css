@@ -1,0 +1,102 @@
+.scripture {
+  max-width: 42rem;
+  margin: 0 auto;
+
+  font-size: clamp(1.08rem, 4.7vw, 1.35rem);
+  line-height: 1.62;
+
+  text-align: justify;
+
+  hyphens: auto;
+}
+
+.verse {
+  display: inline;
+}
+
+.verse-number {
+  position: relative;
+  top: -.22em;
+
+  margin-right: .22em;
+
+  color: var(--accent);
+
+  font-size: .63em;
+  font-weight: 700;
+}
+
+.verse + .verse {
+  margin-left: .18em;
+}
+
+.verse:first-child::first-letter {
+  float: left;
+
+  margin:
+    .05em
+    .10em
+    -.08em
+    0;
+
+  color: var(--accent);
+
+  font-size: 4.4em;
+  line-height: .72;
+
+  font-weight: 700;
+}
+
+.loading {
+  text-align: center;
+  font-style: italic;
+  color: var(--muted-ink);
+}
+
+body.nocturne {
+  --ink: #e1d3b6;
+  --muted-ink: #a99672;
+  --paper: #211b14;
+  --paper-deep: #17130f;
+  --paper-light: #2a2117;
+  --rule: #756044;
+  --accent: #ad5d4e;
+  --shadow: rgba(0, 0, 0, .5);
+}
+
+body.nocturne .folio {
+  border-color: #554735;
+}
+
+@media (min-width: 800px) {
+  .scripture {
+    font-size: 1.23rem;
+    line-height: 1.72;
+  }
+}
+
+.verse {
+  cursor: pointer;
+  border-radius: 2px;
+
+  transition:
+    background-color .16s ease,
+    box-shadow .16s ease;
+}
+
+.verse:hover {
+  background: rgba(109, 28, 23, .07);
+}
+
+.verse:focus-visible {
+  outline: none;
+
+  background: rgba(109, 28, 23, .09);
+
+  box-shadow:
+    0 0 0 1px rgba(109, 28, 23, .35);
+}
+
+.verse:active {
+  background: rgba(109, 28, 23, .13);
+}

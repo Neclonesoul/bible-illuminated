@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+  <title>Bible Illuminated</title>
+
+  <meta
+    name="description"
+    content="An offline-first illuminated King James Bible reader with KJV and 1611 comparison."
+  >
+
+  <link rel="manifest" href="/app.webmanifest">
+  <meta name="theme-color" content="#15120e">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="icon" href="/assets/icons/icon.svg">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/folio.css">
+  <link rel="stylesheet" href="/assets/css/reader.css">
+  <link rel="stylesheet" href="/assets/css/compare.css">
+</head>
+
+<body>
+
+  <header class="app-bar">
+    <button class="app-button" id="booksButton" aria-label="Books">☰</button>
+
+    <div class="app-title">
+      <strong>BIBLE ILLUMINATED</strong>
+      <span>VERBUM TUUM VERITAS</span>
+    </div>
+
+    <div class="app-actions">
+      <button class="app-button" id="searchButton" aria-label="Search">⌕</button>
+      <button class="app-button" id="themeButton" aria-label="Theme">☾</button>
+    </div>
+  </header>
+
+  <main class="folio-shell">
+
+    <article class="folio">
+
+      <div class="ornament ornament-top" aria-hidden="true">
+        ❦ ✠ ❦
+      </div>
+
+      <header class="title-page">
+
+        <p class="title-small">THE</p>
+
+        <h1>HOLY BIBLE</h1>
+
+        <p class="title-description">
+          Conteyning the Old Teſtament,<br>
+          AND THE NEW
+        </p>
+
+        <div class="title-cross">✠</div>
+
+        <p class="title-edition">
+          King James Bible · 1611
+        </p>
+
+      </header>
+
+      <div class="ornamental-rule" aria-hidden="true">
+        <span>❧</span>
+      </div>
+
+      <section class="chapter-heading">
+
+        <p id="bookKicker">THE GOSPEL ACCORDING TO</p>
+
+        <h2 id="bookTitle">S. IOHN</h2>
+
+        <p class="chapter-number" id="chapterHeading">
+          CHAP. III.
+        </p>
+
+      </section>
+
+      <section
+        class="scripture"
+        id="scripture"
+        aria-live="polite"
+      >
+        <p class="loading">Opening the Book…</p>
+      </section>
+
+      <footer class="folio-footer">
+
+        <div class="ornament" aria-hidden="true">
+          ❦
+        </div>
+
+        <p id="folioReference">
+          IOHN III
+        </p>
+
+      </footer>
+
+    </article>
+
+  </main>
+
+
+  <aside class="navigator" id="navigator" hidden>
+    <div class="navigator-backdrop" id="navigatorBackdrop"></div>
+
+    <section class="navigator-panel" role="dialog" aria-modal="true" aria-labelledby="navigatorTitle">
+
+      <header class="navigator-header">
+        <div>
+          <strong id="navigatorTitle">BOOKS</strong>
+          <span id="navigatorEdition">KJV 1611</span>
+        </div>
+
+        <button id="navigatorClose" aria-label="Close">×</button>
+      </header>
+
+      <div class="offline-library">
+        <button id="offlineLibraryButton">
+          DOWNLOAD OFFLINE LIBRARY
+        </button>
+
+        <div id="offlineLibraryStatus">
+          Cache the complete KJV + KJV 1611 library on this device.
+        </div>
+      </div>
+
+      <div class="navigator-body">
+
+        <section id="bookStage">
+          <p class="navigator-label">SELECT A BOOK</p>
+          <div class="book-grid" id="bookGrid"></div>
+        </section>
+
+        <section id="chapterStage" hidden>
+          <button class="navigator-back" id="backToBooks">‹ BOOKS</button>
+
+          <p class="navigator-label" id="selectedBookTitle"></p>
+
+          <div class="chapter-grid" id="chapterGrid"></div>
+        </section>
+
+      </div>
+
+    </section>
+  </aside>
+
+
+  <aside class="search-overlay" id="searchOverlay" hidden>
+    <div class="search-backdrop" id="searchBackdrop"></div>
+
+    <section class="search-panel" role="dialog" aria-modal="true" aria-labelledby="searchTitle">
+
+      <header class="search-header">
+        <div>
+          <strong id="searchTitle">WORD SEARCH</strong>
+          <span id="searchEdition">KJV 1611</span>
+        </div>
+
+        <button id="searchClose" aria-label="Close search">×</button>
+      </header>
+
+      <form class="search-form" id="searchForm">
+        <input
+          id="searchInput"
+          type="search"
+          autocomplete="off"
+          spellcheck="false"
+          placeholder="Search words or phrases…"
+          aria-label="Word search Bible text"
+        >
+
+        <button type="submit">SEARCH</button>
+      </form>
+
+      <div class="search-status" id="searchStatus">
+        Search Bible text by word or phrase. Use book navigation for chapter and verse.
+      </div>
+
+      <div class="search-results" id="searchResults"></div>
+
+    </section>
+  </aside>
+
+  <nav class="reader-controls">
+
+    <button id="previousChapter" aria-label="Previous chapter">
+      ‹
+    </button>
+
+    <button id="editionButton">
+      1611
+    </button>
+
+    <button id="compareButton">
+      COMPARE
+    </button>
+
+    <button id="nextChapter" aria-label="Next chapter">
+      ›
+    </button>
+
+  </nav>
+
+  <script type="module" src="/assets/js/app.js"></script>
+
+</body>
+</html>
