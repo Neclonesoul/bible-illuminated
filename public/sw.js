@@ -1,4 +1,4 @@
-const VERSION = "bible-illuminated-v0.1.3";
+const VERSION = "bible-illuminated-v0.1.4";
 
 const SHELL_CACHE = `${VERSION}-shell`;
 const DATA_CACHE = `${VERSION}-data`;

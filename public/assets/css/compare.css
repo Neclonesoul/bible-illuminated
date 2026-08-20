@@ -1,14 +1,38 @@
+/* =========================================================
+   BIBLE ILLUMINATED
+   VERSE COMPARISON
+   Single authoritative layout
+   ========================================================= */
+
 .verse-compare-view {
-  display: grid;
-  gap: 20px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .verse-compare-heading {
+  position: static;
+  inset: auto;
+
+  width: 100%;
+  margin: 0 0 10px;
+  padding: 8px 6px 10px;
+
   text-align: center;
+
+  background: transparent;
+
+  border-bottom:
+    1px solid rgba(89, 66, 39, .32);
 }
 
 .verse-compare-reference {
-  font-size: 1.35rem;
+  margin: 0;
+
+  color: var(--ink);
+
+  font-size: 1.05rem;
+  line-height: 1.2;
   letter-spacing: .12em;
 }
 
@@ -17,93 +41,120 @@
 
   color: var(--muted-ink);
 
-  font-size: .66rem;
-  letter-spacing: .16em;
+  font-size: .61rem;
+  line-height: 1.2;
+  letter-spacing: .14em;
 }
 
 .compare-shell {
   display: grid;
-  gap: 16px;
+  grid-template-columns: minmax(0, 1fr);
+
+  gap: 7px;
+
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .compare-panel {
-  padding: 20px 16px 24px;
+  position: static;
 
-  border: 1px solid rgba(89, 66, 39, .5);
+  width: 100%;
+  margin: 0;
+  padding: 10px 12px 12px;
+
+  overflow: visible;
+
+  border:
+    1px solid rgba(89, 66, 39, .46);
 
   background:
     linear-gradient(
       180deg,
-      rgba(255,255,255,.07),
+      rgba(255,255,255,.055),
       transparent
     );
 }
 
 .compare-panel h3 {
-  margin: 0 0 8px;
+  margin: 0 0 7px;
+
+  color: var(--ink);
 
   text-align: center;
 
-  font-size: .72rem;
-  letter-spacing: .17em;
+  font-size: .62rem;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: .15em;
 }
 
 .compare-verse-reference {
-  margin-bottom: 12px;
-
-  text-align: center;
-
-  color: var(--accent);
-
-  font-size: .65rem;
-  letter-spacing: .12em;
+  display: none;
 }
 
 .compare-focus-text {
-  margin: 0;
+  display: block;
 
-  font-size: clamp(1.1rem, 4.7vw, 1.4rem);
-  line-height: 1.62;
+  margin: 0;
+  padding: 0;
+
+  color: var(--ink);
+
+  font-family:
+    var(--reading-face, Georgia, "Times New Roman", serif);
+
+  font-size:
+    calc(
+      .98rem *
+      var(--reader-scale, 1)
+    );
+
+  line-height: 1.36;
 
   text-align: left;
+
+  overflow: visible;
 }
 
 .verse-nav {
+  position: static;
+
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
+
+  gap: 7px;
+
+  width: 100%;
+  margin: 8px 0 0;
+  padding: 0;
+
+  background: transparent;
 }
 
 .verse-nav button {
+  min-width: 0;
   min-height: 42px;
 
-  border: 1px solid rgba(89, 66, 39, .55);
+  padding: 7px 5px;
+
+  border:
+    1px solid rgba(89, 66, 39, .48);
+
   border-radius: 2px;
 
   background: transparent;
   color: var(--ink);
 
-  font-size: .68rem;
-  letter-spacing: .12em;
-}
-
-@media (min-width: 900px) {
-  .compare-shell {
-    grid-template-columns: 1fr 1fr;
-    align-items: stretch;
-  }
-
-  .compare-panel {
-    padding: 28px 24px 32px;
-  }
-
-  .compare-focus-text {
-    font-size: 1.22rem;
-  }
+  font-size: .62rem;
+  line-height: 1.2;
+  letter-spacing: .10em;
 }
 
 /* =========================================================
-   COMPACT STUDY MODE
+   COMPARISON PAGE MODE
+   Remove decorative elements that waste study space
    ========================================================= */
 
 body.compare-mode .folio-shell {
@@ -111,431 +162,145 @@ body.compare-mode .folio-shell {
 }
 
 body.compare-mode .folio {
-  padding-top: 14px;
+  padding:
+    16px
+    20px
+    26px;
 }
 
 body.compare-mode .title-page,
 body.compare-mode .ornament-top,
 body.compare-mode .ornamental-rule,
 body.compare-mode .chapter-heading {
-  display: none;
+  display: none !important;
 }
 
 body.compare-mode .scripture {
+  display: block;
+
+  width: 100%;
   max-width: none;
 
-  font-size: 1rem;
+  margin: 0;
+  padding: 0;
+
+  text-align: left;
 }
 
-body.compare-mode .verse-compare-view {
-  gap: 10px;
+body.compare-mode .folio-footer {
+  display: none !important;
 }
 
-body.compare-mode .verse-compare-heading {
+/* =========================================================
+   COMPACT COMPARISON
+   ========================================================= */
 
-
-  z-index: 8;
-
-  margin: 0 0 10px;
-  padding: 10px 4px;
-
-  background: var(--paper);
-
-  border-bottom:
-    1px solid rgba(89,66,39,.3);
+body.compare-compact .verse-compare-heading {
+  margin-bottom: 6px;
+  padding:
+    5px
+    4px
+    7px;
 }
 
-body.compare-mode .verse-compare-reference {
-  font-size: 1.05rem;
+body.compare-compact .verse-compare-subtitle {
+  font-size: .55rem;
 }
 
-body.compare-mode .compare-shell {
-  gap: 8px;
+body.compare-compact .compare-shell {
+  gap: 5px;
 }
-
-body.compare-mode .compare-panel {
-  padding: 12px 12px 14px;
-}
-
-body.compare-mode .compare-panel h3 {
-  margin-bottom: 5px;
-
-  font-size: .62rem;
-}
-
-body.compare-mode .compare-verse-reference {
-  display: none;
-}
-
-body.compare-mode .compare-focus-text {
-  font-size:
-    calc(
-      1.05rem
-      * var(--reader-scale)
-    );
-
-  line-height: 1.42;
-}
-
-body.compare-mode .verse-nav {
-  gap: 6px;
-}
-
-body.compare-mode .verse-nav button {
-  min-height: 38px;
-}
-
-/* Extra-density option */
 
 body.compare-compact .compare-panel {
-  padding: 9px 10px 11px;
+  padding:
+    8px
+    10px
+    9px;
+}
+
+body.compare-compact .compare-panel h3 {
+  margin-bottom: 5px;
+
+  font-size: .55rem;
 }
 
 body.compare-compact .compare-focus-text {
   font-size:
     calc(
-      .94rem
-      * var(--reader-scale)
+      .90rem *
+      var(--reader-scale, 1)
     );
 
-  line-height: 1.34;
+  line-height: 1.28;
 }
 
-body.compare-compact .verse-compare-subtitle {
-  display: none;
+body.compare-compact .verse-nav {
+  margin-top: 6px;
 }
 
-body.compare-compact .verse-compare-heading {
-  padding-top: 7px;
-  padding-bottom: 7px;
+body.compare-compact .verse-nav button {
+  min-height: 38px;
 }
 
-/*
-  Use facing columns considerably earlier than before.
-  Landscape phones and small tablets benefit immediately.
-*/
+/* =========================================================
+   TABLET / LANDSCAPE / DESKTOP
+   True facing-page comparison
+   ========================================================= */
 
-@media (min-width: 620px) {
-  body.compare-mode .compare-shell {
-    grid-template-columns: 1fr 1fr;
-    align-items: stretch;
+@media (min-width: 720px) {
+  body.compare-mode .folio {
+    padding:
+      22px
+      28px
+      30px;
+  }
+
+  .compare-shell {
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(0, 1fr);
+
+    gap: 10px;
+  }
+
+  .compare-panel {
+    padding:
+      15px
+      16px
+      18px;
+  }
+
+  .compare-focus-text {
+    font-size:
+      calc(
+        1rem *
+        var(--reader-scale, 1)
+      );
+
+    line-height: 1.4;
+  }
+
+  .verse-compare-heading {
+    margin-bottom: 12px;
   }
 }
 
-/*
-  On very wide desktop displays, keep each column comfortable
-  rather than letting lines grow excessively long.
-*/
-
 @media (min-width: 1100px) {
-  body.compare-mode .verse-compare-view {
+  .verse-compare-view {
     max-width: 980px;
     margin: 0 auto;
   }
 }
 
-/* =========================================================
-   FIX: COMPARISON HEADER OVERLAP / CLIPPING
-   ========================================================= */
-
-/*
-  The sticky verse header previously sat on top of the first
-  comparison panel. Keep it in normal document flow on phones.
-*/
-
-@media (max-width: 899px) {
-
-  body.compare-mode .verse-compare-heading {
-    position: relative;
-    top: auto;
-    z-index: auto;
-
-    margin: 0 0 10px;
-    padding: 10px 4px;
-
-    background: transparent;
-
-    border-bottom:
-      1px solid rgba(89,66,39,.30);
-  }
-
-  body.compare-mode .verse-compare-view {
-    padding-top: 0;
-  }
-
-  body.compare-mode .compare-shell {
-    margin-top: 0;
-  }
-
-  body.compare-mode .compare-panel {
-    overflow: visible;
-  }
+body.compare-mode .folio > .scripture {
+  margin-top: 0 !important;
 }
 
-/*
-  Desktop/tablet can still use sticky reference heading,
-  but give the content enough clearance underneath.
-*/
-
-@media (min-width: 900px) {
-
-  body.compare-mode .verse-compare-heading {
-
-
-
-    margin: 0 0 14px;
-    padding: 10px 4px;
-
-    background: var(--paper);
-  }
-
-  body.compare-mode .compare-shell {
-    padding-top: 2px;
-  }
-}
-
-@media (max-width: 619px) {
-  body.compare-compact .compare-shell {
-    gap: 5px;
-  }
-
-  body.compare-compact .compare-panel {
-    padding: 8px 9px 9px;
-  }
-
-  body.compare-compact .compare-panel h3 {
-    margin-bottom: 4px;
-
-    font-size: .57rem;
-    letter-spacing: .10em;
-  }
-
-  body.compare-compact .compare-focus-text {
-    margin: 0;
-
-    font-size:
-      calc(
-        .90rem
-        * var(--reader-scale)
-      );
-
-    line-height: 1.28;
-  }
-
-  body.compare-compact .verse-nav {
-
-    bottom: 58px;
-    z-index: 7;
-
-    padding-top: 5px;
-
-    background: var(--paper);
-  }
-
-  body.compare-compact .folio-footer {
-    display: none;
-  }
-}
-
-/* =========================================================
-   FIX: COMPARISON HEADER OVERLAP / CLIPPING
-   ========================================================= */
-
-/*
-  The sticky verse header previously sat on top of the first
-  comparison panel. Keep it in normal document flow on phones.
-*/
-
-@media (max-width: 899px) {
-
-  body.compare-mode .verse-compare-heading {
-    position: relative;
-    top: auto;
-    z-index: auto;
-
-    margin: 0 0 10px;
-    padding: 10px 4px;
-
-    background: transparent;
-
-    border-bottom:
-      1px solid rgba(89,66,39,.30);
-  }
-
-  body.compare-mode .verse-compare-view {
-    padding-top: 0;
-  }
-
-  body.compare-mode .compare-shell {
-    margin-top: 0;
-  }
-
-  body.compare-mode .compare-panel {
-    overflow: visible;
-  }
-}
-
-/*
-  Desktop/tablet can still use sticky reference heading,
-  but give the content enough clearance underneath.
-*/
-
-@media (min-width: 900px) {
-
-  body.compare-mode .verse-compare-heading {
-
-
-
-    margin: 0 0 14px;
-    padding: 10px 4px;
-
-    background: var(--paper);
-  }
-
-  body.compare-mode .compare-shell {
-    padding-top: 2px;
-  }
-}
-
-/* =========================================================
-   MOBILE COMPARISON — FINAL NON-OVERLAPPING LAYOUT
-   ========================================================= */
-
-@media (max-width: 899px) {
-
-  body.compare-mode .folio {
-    padding-top: 10px;
-  }
-
-  body.compare-mode .verse-compare-view {
-    display: block;
-    padding-top: 0;
-    margin-top: 0;
-  }
-
-  body.compare-mode .verse-compare-heading {
-    position: static !important;
-    top: auto !important;
-    inset: auto !important;
-
-    width: auto;
-
-    margin: 0 0 10px !important;
-    padding: 8px 6px 10px !important;
-
-    transform: none !important;
-
-    background: transparent !important;
-
-    border-top: 0;
-    border-left: 0;
-    border-right: 0;
-
-    border-bottom:
-      1px solid rgba(89,66,39,.30);
-  }
-
-  body.compare-mode .verse-compare-reference {
-    margin: 0;
-
-    font-size: 1rem;
-    line-height: 1.2;
-  }
-
-  body.compare-mode .verse-compare-subtitle {
-    margin-top: 4px;
-  }
-
-  body.compare-mode .compare-shell {
-    display: grid;
-    grid-template-columns: 1fr;
-
-    gap: 8px;
-
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  body.compare-mode .compare-panel {
-    position: static !important;
-
-    margin: 0;
-    padding: 11px 12px 13px;
-
-    overflow: visible;
-
-    transform: none !important;
-  }
-
-  body.compare-mode .compare-panel:first-child {
-    margin-top: 0 !important;
-  }
-
-  body.compare-mode .compare-focus-text {
-    margin: 0;
-
-    font-size:
-      calc(
-        .98rem
-        * var(--reader-scale)
-      );
-
-    line-height: 1.36;
-  }
-
-  body.compare-mode .compare-panel h3 {
-    margin: 0 0 7px;
-  }
-
-  body.compare-mode .verse-nav {
-    position: static !important;
-    bottom: auto !important;
-
-    margin-top: 8px;
-    padding-top: 0;
-
-    background: transparent;
-  }
-
-  body.compare-mode .folio-footer {
-    margin-top: 18px;
-  }
-}
-
-/* Compact mode gets even tighter */
-
-@media (max-width: 899px) {
-
-  body.compare-mode.compare-compact .verse-compare-heading {
-    margin-bottom: 7px !important;
-    padding: 6px 4px 7px !important;
-  }
-
-  body.compare-mode.compare-compact .compare-shell {
-    gap: 6px;
-  }
-
-  body.compare-mode.compare-compact .compare-panel {
-    padding: 8px 10px 10px;
-  }
-
-  body.compare-mode.compare-compact .compare-focus-text {
-    font-size:
-      calc(
-        .90rem
-        * var(--reader-scale)
-      );
-
-    line-height: 1.28;
-  }
-
-  body.compare-mode.compare-compact .compare-panel h3 {
-    margin-bottom: 5px;
-
-    font-size: .56rem;
-  }
-
-  body.compare-mode.compare-compact .folio-footer {
-    margin-top: 12px;
-  }
+body.compare-mode .verse-compare-view,
+body.compare-mode .verse-compare-heading,
+body.compare-mode .compare-shell,
+body.compare-mode .compare-panel {
+  transform: none !important;
+  top: auto !important;
+  bottom: auto !important;
 }
