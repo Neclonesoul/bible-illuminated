@@ -100,3 +100,11 @@ body.nocturne .folio {
 .verse:active {
   background: rgba(109, 28, 23, .13);
 }
+
+.scripture {
+  font-size:
+    calc(
+      clamp(1.08rem, 4.7vw, 1.35rem)
+      * var(--reader-scale)
+    );
+}

@@ -298,6 +298,11 @@ async function renderComparison() {
 }
 
 async function render() {
+  document.body.classList.toggle(
+    "compare-mode",
+    state.mode === "compare"
+  );
+
   scripture.innerHTML =
     `<p class="loading">Opening the Book…</p>`;
 
@@ -869,3 +874,125 @@ if (
 
   offlineLibraryButton.disabled = true;
 }
+
+/* =========================================================
+   DISPLAY SETTINGS
+   ========================================================= */
+
+const displayButton =
+  document.querySelector("#displayButton");
+
+const displayOverlay =
+  document.querySelector("#displayOverlay");
+
+const displayBackdrop =
+  document.querySelector("#displayBackdrop");
+
+const displayClose =
+  document.querySelector("#displayClose");
+
+const fontButtons =
+  document.querySelectorAll("[data-font-size]");
+
+const densityButtons =
+  document.querySelectorAll("[data-density]");
+
+function applyFontSize(size) {
+  document.body.classList.remove(
+    "text-small",
+    "text-medium",
+    "text-large"
+  );
+
+  document.body.classList.add(
+    `text-${size}`
+  );
+
+  localStorage.setItem(
+    "bible-illuminated-font-size",
+    size
+  );
+
+  for (const button of fontButtons) {
+    button.classList.toggle(
+      "active",
+      button.dataset.fontSize === size
+    );
+  }
+}
+
+function applyCompareDensity(density) {
+  document.body.classList.toggle(
+    "compare-compact",
+    density === "compact"
+  );
+
+  localStorage.setItem(
+    "bible-illuminated-compare-density",
+    density
+  );
+
+  for (const button of densityButtons) {
+    button.classList.toggle(
+      "active",
+      button.dataset.density === density
+    );
+  }
+}
+
+function openDisplaySettings() {
+  displayOverlay.hidden = false;
+}
+
+function closeDisplaySettings() {
+  displayOverlay.hidden = true;
+}
+
+displayButton?.addEventListener(
+  "click",
+  openDisplaySettings
+);
+
+displayClose?.addEventListener(
+  "click",
+  closeDisplaySettings
+);
+
+displayBackdrop?.addEventListener(
+  "click",
+  closeDisplaySettings
+);
+
+fontButtons.forEach(button => {
+  button.addEventListener(
+    "click",
+    () => {
+      applyFontSize(
+        button.dataset.fontSize
+      );
+    }
+  );
+});
+
+densityButtons.forEach(button => {
+  button.addEventListener(
+    "click",
+    () => {
+      applyCompareDensity(
+        button.dataset.density
+      );
+    }
+  );
+});
+
+applyFontSize(
+  localStorage.getItem(
+    "bible-illuminated-font-size"
+  ) || "medium"
+);
+
+applyCompareDensity(
+  localStorage.getItem(
+    "bible-illuminated-compare-density"
+  ) || "compact"
+);

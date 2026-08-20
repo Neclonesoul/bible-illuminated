@@ -101,3 +101,135 @@
     font-size: 1.22rem;
   }
 }
+
+/* =========================================================
+   COMPACT STUDY MODE
+   ========================================================= */
+
+body.compare-mode .folio-shell {
+  padding-top: 8px;
+}
+
+body.compare-mode .folio {
+  padding-top: 14px;
+}
+
+body.compare-mode .title-page,
+body.compare-mode .ornament-top,
+body.compare-mode .ornamental-rule,
+body.compare-mode .chapter-heading {
+  display: none;
+}
+
+body.compare-mode .scripture {
+  max-width: none;
+
+  font-size: 1rem;
+}
+
+body.compare-mode .verse-compare-view {
+  gap: 10px;
+}
+
+body.compare-mode .verse-compare-heading {
+  position: sticky;
+  top: 66px;
+  z-index: 8;
+
+  margin: -2px -4px 4px;
+  padding: 10px 4px;
+
+  background: var(--paper);
+
+  border-bottom:
+    1px solid rgba(89,66,39,.3);
+}
+
+body.compare-mode .verse-compare-reference {
+  font-size: 1.05rem;
+}
+
+body.compare-mode .compare-shell {
+  gap: 8px;
+}
+
+body.compare-mode .compare-panel {
+  padding: 12px 12px 14px;
+}
+
+body.compare-mode .compare-panel h3 {
+  margin-bottom: 5px;
+
+  font-size: .62rem;
+}
+
+body.compare-mode .compare-verse-reference {
+  display: none;
+}
+
+body.compare-mode .compare-focus-text {
+  font-size:
+    calc(
+      1.05rem
+      * var(--reader-scale)
+    );
+
+  line-height: 1.42;
+}
+
+body.compare-mode .verse-nav {
+  gap: 6px;
+}
+
+body.compare-mode .verse-nav button {
+  min-height: 38px;
+}
+
+/* Extra-density option */
+
+body.compare-compact .compare-panel {
+  padding: 9px 10px 11px;
+}
+
+body.compare-compact .compare-focus-text {
+  font-size:
+    calc(
+      .94rem
+      * var(--reader-scale)
+    );
+
+  line-height: 1.34;
+}
+
+body.compare-compact .verse-compare-subtitle {
+  display: none;
+}
+
+body.compare-compact .verse-compare-heading {
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+/*
+  Use facing columns considerably earlier than before.
+  Landscape phones and small tablets benefit immediately.
+*/
+
+@media (min-width: 620px) {
+  body.compare-mode .compare-shell {
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+  }
+}
+
+/*
+  On very wide desktop displays, keep each column comfortable
+  rather than letting lines grow excessively long.
+*/
+
+@media (min-width: 1100px) {
+  body.compare-mode .verse-compare-view {
+    max-width: 980px;
+    margin: 0 auto;
+  }
+}

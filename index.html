@@ -32,7 +32,8 @@
     </div>
 
     <div class="app-actions">
-      <button class="app-button" id="searchButton" aria-label="Search">⌕</button>
+      <button class="app-button" id="displayButton" aria-label="Display settings">Aa</button>
+      <button class="app-button" id="searchButton" aria-label="Word search">⌕</button>
       <button class="app-button" id="themeButton" aria-label="Theme">☾</button>
     </div>
   </header>
@@ -183,6 +184,45 @@
 
       <div class="search-results" id="searchResults"></div>
 
+    </section>
+  </aside>
+
+
+  <aside class="display-overlay" id="displayOverlay" hidden>
+    <div class="display-backdrop" id="displayBackdrop"></div>
+
+    <section class="display-panel">
+      <header>
+        <div>
+          <strong>READING DISPLAY</strong>
+          <span>Typography and comparison density</span>
+        </div>
+
+        <button id="displayClose" aria-label="Close">×</button>
+      </header>
+
+      <div class="display-section">
+        <p>TEXT SIZE</p>
+
+        <div class="text-size-controls">
+          <button data-font-size="small">A−</button>
+          <button data-font-size="medium">A</button>
+          <button data-font-size="large">A+</button>
+        </div>
+      </div>
+
+      <div class="display-section">
+        <p>COMPARISON</p>
+
+        <div class="density-controls">
+          <button data-density="compact">COMPACT</button>
+          <button data-density="comfortable">COMFORTABLE</button>
+        </div>
+      </div>
+
+      <p class="display-note">
+        Compact comparison reduces ornament, spacing and text size so both editions remain visible with less scrolling.
+      </p>
     </section>
   </aside>
 
