@@ -59,7 +59,7 @@
 
 @media (min-width: 800px) {
   .scripture {
-    font-size: 1.23rem;
+    --scripture-base-size: 1.23rem;
     line-height: 1.72;
   }
 }
@@ -91,11 +91,15 @@
 }
 
 .scripture {
+  --scripture-base-size: clamp(1.06rem, 4.35vw, 1.32rem);
+
   font-size:
     calc(
-      clamp(1.08rem, 4.7vw, 1.35rem)
+      var(--scripture-base-size)
       * var(--reader-scale)
     );
+
+  line-height: 1.64;
 }
 
 /* =========================================================
@@ -267,4 +271,41 @@ body.compare-mode .drop-initial {
   box-shadow: none;
 
   font: inherit;
+}
+
+
+/* =========================================================
+   V1.1 READER TYPOGRAPHY HARDENING
+   Body text scales independently from chapter ornament.
+   ========================================================= */
+
+.drop-initial {
+  font-size: clamp(3.65em, 4.15em, 4.15em);
+}
+
+.illuminated-initial {
+  font-size: clamp(3.35em, 3.85em, 3.85em);
+}
+
+body.page-reading .illuminated-initial {
+  font-size: clamp(3.55em, 4.1em, 4.1em);
+}
+
+@media (max-width: 430px) {
+  .scripture {
+    --scripture-base-size: clamp(1.02rem, 4.55vw, 1.20rem);
+    line-height: 1.60;
+  }
+
+  .drop-initial {
+    font-size: 3.75em;
+  }
+
+  .illuminated-initial {
+    font-size: 3.45em;
+  }
+
+  body.page-reading .illuminated-initial {
+    font-size: 3.65em;
+  }
 }

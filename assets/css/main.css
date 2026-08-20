@@ -573,21 +573,6 @@ button {
    READING DISPLAY
    ========================================================= */
 
-:root {
-  --reader-scale: 1;
-}
-
-body.text-small {
-  --reader-scale: .88;
-}
-
-body.text-medium {
-  --reader-scale: 1;
-}
-
-body.text-large {
-  --reader-scale: 1.16;
-}
 
 .display-overlay[hidden] {
   display: none;
@@ -1153,7 +1138,7 @@ body.text-medium {
 }
 
 body.text-large {
-  --reader-scale: 1.09;
+  --reader-scale: 1.14;
 }
 
 @media (max-width: 430px) {
