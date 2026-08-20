@@ -1,3 +1,4 @@
+// cache-bust: 2026-08-20-ui-recovery
 const VERSION = "bible-illuminated-v0.1.8";
 
 const SHELL_CACHE = `${VERSION}-shell`;

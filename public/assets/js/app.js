@@ -923,16 +923,6 @@ nextChapter.addEventListener(
 );
 
 
-
-    themeButton.textContent =
-      document.body.classList.contains(
-        "nocturne"
-      )
-        ? "☀"
-        : "☾";
-  }
-);
-
 document.addEventListener(
   "keydown",
   event => {
