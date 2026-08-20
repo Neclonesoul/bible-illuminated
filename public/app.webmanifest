@@ -1,0 +1,25 @@
+{
+  "id": "/",
+  "name": "Bible Illuminated",
+  "short_name": "Illuminated",
+  "description": "An offline-first illuminated KJV and KJV 1611 reader.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#15120e",
+  "theme_color": "#15120e",
+  "categories": [
+    "books",
+    "education",
+    "reference"
+  ],
+  "icons": [
+    {
+      "src": "/assets/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+.verse-compare-view {
+  display: grid;
+  gap: 20px;
+}
+
+.verse-compare-heading {
+  text-align: center;
+}
+
+.verse-compare-reference {
+  font-size: 1.35rem;
+  letter-spacing: .12em;
+}
+
+.verse-compare-subtitle {
+  margin-top: 5px;
+
+  color: var(--muted-ink);
+
+  font-size: .66rem;
+  letter-spacing: .16em;
+}
+
+.compare-shell {
+  display: grid;
+  gap: 16px;
+}
+
+.compare-panel {
+  padding: 20px 16px 24px;
+
+  border: 1px solid rgba(89, 66, 39, .5);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.07),
+      transparent
+    );
+}
+
+.compare-panel h3 {
+  margin: 0 0 8px;
+
+  text-align: center;
+
+  font-size: .72rem;
+  letter-spacing: .17em;
+}
+
+.compare-verse-reference {
+  margin-bottom: 12px;
+
+  text-align: center;
+
+  color: var(--accent);
+
+  font-size: .65rem;
+  letter-spacing: .12em;
+}
+
+.compare-focus-text {
+  margin: 0;
+
+  font-size: clamp(1.1rem, 4.7vw, 1.4rem);
+  line-height: 1.62;
+
+  text-align: left;
+}
+
+.verse-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.verse-nav button {
+  min-height: 42px;
+
+  border: 1px solid rgba(89, 66, 39, .55);
+  border-radius: 2px;
+
+  background: transparent;
+  color: var(--ink);
+
+  font-size: .68rem;
+  letter-spacing: .12em;
+}
+
+@media (min-width: 900px) {
+  .compare-shell {
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+  }
+
+  .compare-panel {
+    padding: 28px 24px 32px;
+  }
+
+  .compare-focus-text {
+    font-size: 1.22rem;
+  }
+}

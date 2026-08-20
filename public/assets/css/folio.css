@@ -1,0 +1,208 @@
+.folio-shell {
+  width: 100%;
+  padding: 18px 10px 92px;
+}
+
+.folio {
+  position: relative;
+
+  width: min(760px, 100%);
+  margin: 0 auto;
+
+  padding: 26px 22px 42px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(92, 69, 37, .08),
+      transparent 12%,
+      transparent 88%,
+      rgba(92, 69, 37, .08)
+    ),
+    radial-gradient(
+      ellipse at top,
+      var(--paper-light),
+      var(--paper) 50%,
+      var(--paper-deep)
+    );
+
+  border: 1px solid #7b684d;
+
+  box-shadow:
+    0 18px 50px var(--shadow),
+    inset 0 0 45px rgba(79, 59, 33, .11);
+
+  overflow: hidden;
+}
+
+.folio::before,
+.folio::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.folio::before {
+  inset: 8px;
+  border: 1px solid rgba(78, 58, 35, .5);
+}
+
+.folio::after {
+  inset: 13px;
+  border: 1px solid rgba(78, 58, 35, .22);
+}
+
+.title-page,
+.chapter-heading,
+.scripture,
+.folio-footer,
+.ornament,
+.ornamental-rule {
+  position: relative;
+  z-index: 2;
+}
+
+.title-page {
+  padding: 16px 0 24px;
+  text-align: center;
+}
+
+.title-small {
+  margin: 0;
+  font-size: .88rem;
+  letter-spacing: .32em;
+}
+
+.title-page h1 {
+  margin: 4px 0 12px;
+
+  font-size: clamp(2.35rem, 11vw, 5rem);
+  font-weight: 500;
+  line-height: .95;
+
+  letter-spacing: -.035em;
+}
+
+.title-description {
+  margin: 0;
+
+  font-size: clamp(.96rem, 3.8vw, 1.3rem);
+  font-style: italic;
+  line-height: 1.45;
+}
+
+.title-cross {
+  margin: 18px 0 12px;
+
+  color: var(--accent);
+
+  font-size: 1.5rem;
+}
+
+.title-edition {
+  margin: 0;
+
+  color: var(--muted-ink);
+
+  font-size: .68rem;
+  text-transform: uppercase;
+  letter-spacing: .2em;
+}
+
+.ornament {
+  text-align: center;
+  color: var(--accent);
+}
+
+.ornament-top {
+  margin-top: 2px;
+  letter-spacing: .3em;
+}
+
+.ornamental-rule {
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--accent);
+}
+
+.ornamental-rule::before,
+.ornamental-rule::after {
+  content: "";
+  width: 34%;
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--rule)
+    );
+}
+
+.ornamental-rule::after {
+  background:
+    linear-gradient(
+      90deg,
+      var(--rule),
+      transparent
+    );
+}
+
+.ornamental-rule span {
+  padding: 0 12px;
+}
+
+.chapter-heading {
+  padding: 18px 0 26px;
+  text-align: center;
+}
+
+.chapter-heading p {
+  margin: 0;
+
+  font-size: .68rem;
+  letter-spacing: .2em;
+}
+
+.chapter-heading h2 {
+  margin: 4px 0 10px;
+
+  font-size: clamp(2rem, 8vw, 3.4rem);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.chapter-number {
+  color: var(--muted-ink);
+}
+
+.folio-footer {
+  margin-top: 32px;
+
+  text-align: center;
+
+  color: var(--muted-ink);
+  font-size: .68rem;
+  letter-spacing: .2em;
+}
+
+.folio-footer .ornament {
+  margin-bottom: 8px;
+
+  color: var(--accent);
+  font-size: 1.2rem;
+}
+
+@media (min-width: 700px) {
+  .folio-shell {
+    padding-top: 34px;
+  }
+
+  .folio {
+    padding: 46px 58px 64px;
+  }
+}

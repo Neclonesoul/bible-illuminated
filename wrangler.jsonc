@@ -3,7 +3,7 @@
   "name": "bible-illuminated",
   "compatibility_date": "2026-08-20",
   "assets": {
-    "directory": ".",
+    "directory": "./public",
     "not_found_handling": "single-page-application"
   }
 }
