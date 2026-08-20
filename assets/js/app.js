@@ -42,7 +42,6 @@ const editionButton = document.querySelector("#editionButton");
 const compareButton = document.querySelector("#compareButton");
 const previousChapter = document.querySelector("#previousChapter");
 const nextChapter = document.querySelector("#nextChapter");
-const themeButton = document.querySelector("#themeButton");
 const booksButton = document.querySelector("#booksButton");
 
 const referenceButton = document.querySelector("#referenceButton");
@@ -923,12 +922,7 @@ nextChapter.addEventListener(
   }
 );
 
-themeButton.addEventListener(
-  "click",
-  () => {
-    document.body.classList.toggle(
-      "nocturne"
-    );
+
 
     themeButton.textContent =
       document.body.classList.contains(
@@ -1368,6 +1362,9 @@ const bookmarkClose =
 const saveBookmarkButton =
   document.querySelector("#saveBookmarkButton");
 
+const shareCurrentButton =
+  document.querySelector("#shareCurrentButton");
+
 const bookmarkList =
   document.querySelector("#bookmarkList");
 
@@ -1543,6 +1540,11 @@ bookmarkBackdrop?.addEventListener(
 saveBookmarkButton?.addEventListener(
   "click",
   saveCurrentBookmark
+);
+
+shareCurrentButton?.addEventListener(
+  "click",
+  shareCurrentReference
 );
 
 shareButton?.addEventListener(

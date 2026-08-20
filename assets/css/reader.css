@@ -53,20 +53,9 @@
   color: var(--muted-ink);
 }
 
-body.nocturne {
-  --ink: #e1d3b6;
-  --muted-ink: #a99672;
-  --paper: #211b14;
-  --paper-deep: #17130f;
-  --paper-light: #2a2117;
-  --rule: #756044;
-  --accent: #ad5d4e;
-  --shadow: rgba(0, 0, 0, .5);
-}
 
-body.nocturne .folio {
-  border-color: #554735;
-}
+
+
 
 @media (min-width: 800px) {
   .scripture {

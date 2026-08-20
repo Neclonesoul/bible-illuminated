@@ -557,3 +557,105 @@ body.page-reading .chapter-heading {
       );
   }
 }
+
+/* =========================================================
+   AUTHORITATIVE PAGE APPEARANCE
+   ========================================================= */
+
+/* ---------- FOLIO ---------- */
+
+body.page-folio {
+  --ink: #19140d;
+  --muted-ink: #675947;
+  --paper: #e8dcc1;
+  --paper-deep: #d5c39c;
+  --paper-light: #f4ecd8;
+  --rule: #756044;
+  --accent: #6d1c17;
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      #30271d 0%,
+      #15120e 58%
+    );
+}
+
+/* ---------- READING ---------- */
+
+body.page-reading {
+  --ink: #171510;
+  --muted-ink: #625c50;
+  --paper: #f0eadc;
+  --paper-deep: #e5dcc9;
+  --paper-light: #faf6ed;
+  --rule: #afa48f;
+  --accent: #70241d;
+
+  background: #25221c;
+}
+
+body.page-reading .folio {
+  background: var(--paper-light);
+
+  border-color: #b9ae99;
+
+  box-shadow:
+    0 12px 34px rgba(0,0,0,.18);
+}
+
+/* ---------- NOCTURNE ---------- */
+
+body.page-nocturne {
+  --ink: #ded2b9;
+  --muted-ink: #9e9078;
+  --paper: #1e1a14;
+  --paper-deep: #12100d;
+  --paper-light: #272119;
+  --rule: #655642;
+  --accent: #bd6858;
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      #292219,
+      #0d0b09 68%
+    );
+}
+
+body.page-nocturne .folio {
+  background:
+    radial-gradient(
+      ellipse at 50% 8%,
+      #2c251c,
+      #1e1a14 58%,
+      #13100d
+    );
+
+  border-color: #574a3a;
+
+  box-shadow:
+    0 18px 55px rgba(0,0,0,.58),
+    inset 0 0 45px rgba(0,0,0,.18);
+}
+
+body.page-nocturne .compare-panel,
+body.page-nocturne .navigator-panel,
+body.page-nocturne .search-panel,
+body.page-nocturne .reference-panel,
+body.page-nocturne .bookmark-panel,
+body.page-nocturne .display-panel {
+  background: #211c16;
+  color: var(--ink);
+}
+
+/*
+  The application chrome remains dark in ALL three modes.
+  Page style changes the reading surface, not the whole UI.
+*/
+
+.app-bar,
+.reader-controls {
+  background: rgba(21,18,14,.97);
+  color: #e8dcc1;
+}
