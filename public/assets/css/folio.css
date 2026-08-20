@@ -74,13 +74,20 @@
 }
 
 .title-page h1 {
-  margin: 4px 0 12px;
+  margin: 4px auto 12px;
 
-  font-size: clamp(2.35rem, 11vw, 5rem);
+  max-width: 100%;
+  padding-inline: .08em;
+
+  font-size: clamp(2rem, 9vw, 5rem);
   font-weight: 500;
   line-height: .95;
 
   letter-spacing: -.035em;
+
+  overflow-wrap: anywhere;
+  word-break: normal;
+  text-wrap: balance;
 }
 
 .title-description {
@@ -370,32 +377,6 @@ body.page-reading .chapter-heading {
   padding-top: 8px;
 }
 
-body.page-nocturne {
-  --ink: #ded0b2;
-  --muted-ink: #9f8c69;
-  --paper: #1d1812;
-  --paper-deep: #12100d;
-  --paper-light: #251e16;
-  --rule: #66543b;
-  --accent: #b26252;
-
-  background:
-    radial-gradient(
-      circle at 50% 0%,
-      #292117,
-      #0e0c09 68%
-    );
-}
-
-body.page-nocturne .folio {
-  background:
-    radial-gradient(
-      ellipse at 50% 10%,
-      #2b2319,
-      #1b1711 58%,
-      #12100d
-    );
-}
 
 /* =========================================================
    CHAPTER OPENING DEVICE
@@ -542,10 +523,12 @@ body.page-reading .chapter-heading {
   .title-page h1 {
     font-size:
       clamp(
-        2.15rem,
-        10vw,
-        3.45rem
+        1.7rem,
+        8.2vw,
+        3.15rem
       );
+
+    line-height: 1;
   }
 
   .title-description {

@@ -189,13 +189,20 @@
   </aside>
 
 
-  <aside class="display-overlay" id="displayOverlay" hidden>
+  <aside
+    class="display-overlay"
+    id="displayOverlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="displayTitle"
+    hidden
+  >
     <div class="display-backdrop" id="displayBackdrop"></div>
 
     <section class="display-panel">
       <header>
         <div>
-          <strong>READING DISPLAY</strong>
+          <strong id="displayTitle">READING DISPLAY</strong>
           <span>Typography and comparison density</span>
         </div>
 
