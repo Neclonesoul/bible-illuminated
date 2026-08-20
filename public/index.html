@@ -32,6 +32,8 @@
     </div>
 
     <div class="app-actions">
+      <button class="app-button" id="bookmarkButton" aria-label="Bookmarks">☆</button>
+      <button class="app-button" id="shareButton" aria-label="Share reference">↗</button>
       <button class="app-button" id="referenceButton" aria-label="Go to reference">§</button>
       <button class="app-button" id="displayButton" aria-label="Display settings">Aa</button>
       <button class="app-button" id="searchButton" aria-label="Word search">⌕</button>
@@ -267,6 +269,30 @@
       <p id="referenceStatus">
         Enter a Bible book, chapter, and optional verse.
       </p>
+    </section>
+  </aside>
+
+
+  <aside class="bookmark-overlay" id="bookmarkOverlay" hidden>
+    <div class="bookmark-backdrop" id="bookmarkBackdrop"></div>
+
+    <section class="bookmark-panel">
+      <header>
+        <div>
+          <strong>BOOKMARKS</strong>
+          <span>Saved passages on this device</span>
+        </div>
+
+        <button id="bookmarkClose" aria-label="Close">×</button>
+      </header>
+
+      <div class="bookmark-actions">
+        <button id="saveBookmarkButton">
+          SAVE CURRENT REFERENCE
+        </button>
+      </div>
+
+      <div class="bookmark-list" id="bookmarkList"></div>
     </section>
   </aside>
 

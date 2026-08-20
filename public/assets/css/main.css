@@ -880,3 +880,157 @@ body.text-large {
   font-size: .66rem;
   line-height: 1.4;
 }
+
+.bookmark-overlay[hidden] {
+  display: none;
+}
+
+.bookmark-overlay {
+  position: fixed;
+  z-index: 160;
+  inset: 0;
+}
+
+.bookmark-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(7,6,4,.78);
+  backdrop-filter: blur(5px);
+}
+
+.bookmark-panel {
+  position: absolute;
+  inset:
+    max(18px, env(safe-area-inset-top))
+    12px
+    max(18px, env(safe-area-inset-bottom));
+
+  max-width: 620px;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+
+  background: var(--paper);
+  color: var(--ink);
+
+  border: 1px solid var(--rule);
+
+  box-shadow:
+    0 24px 80px rgba(0,0,0,.6);
+}
+
+.bookmark-panel > header {
+  min-height: 64px;
+  padding: 12px 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-bottom:
+    1px solid rgba(89,66,39,.3);
+}
+
+.bookmark-panel header strong {
+  display: block;
+  font-size: .82rem;
+  letter-spacing: .16em;
+}
+
+.bookmark-panel header span {
+  display: block;
+  margin-top: 4px;
+
+  color: var(--muted-ink);
+  font-size: .62rem;
+}
+
+.bookmark-panel header button {
+  width: 42px;
+  height: 42px;
+
+  border:
+    1px solid rgba(89,66,39,.4);
+
+  background: transparent;
+  color: var(--ink);
+
+  font-size: 1.4rem;
+}
+
+.bookmark-actions {
+  padding: 12px 14px;
+
+  border-bottom:
+    1px solid rgba(89,66,39,.24);
+}
+
+#saveBookmarkButton {
+  width: 100%;
+  min-height: 44px;
+
+  border: 1px solid var(--accent);
+
+  background: transparent;
+  color: var(--accent);
+
+  font-size: .66rem;
+  letter-spacing: .12em;
+}
+
+.bookmark-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.bookmark-item {
+  padding: 14px;
+
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+
+  border-bottom:
+    1px solid rgba(89,66,39,.22);
+}
+
+.bookmark-open {
+  border: 0;
+  padding: 0;
+
+  background: transparent;
+  color: var(--ink);
+
+  text-align: left;
+}
+
+.bookmark-reference {
+  display: block;
+
+  color: var(--accent);
+
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .10em;
+}
+
+.bookmark-meta {
+  display: block;
+  margin-top: 4px;
+
+  color: var(--muted-ink);
+
+  font-size: .62rem;
+}
+
+.bookmark-remove {
+  width: 38px;
+  height: 38px;
+
+  border:
+    1px solid rgba(89,66,39,.36);
+
+  background: transparent;
+  color: var(--muted-ink);
+}

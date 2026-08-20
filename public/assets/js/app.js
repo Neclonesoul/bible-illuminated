@@ -1345,3 +1345,207 @@ applyPageStyle(
     "bible-illuminated-page-style"
   ) || "folio"
 );
+
+/* =========================================================
+   BOOKMARKS + SHARE
+   ========================================================= */
+
+const bookmarkButton =
+  document.querySelector("#bookmarkButton");
+
+const shareButton =
+  document.querySelector("#shareButton");
+
+const bookmarkOverlay =
+  document.querySelector("#bookmarkOverlay");
+
+const bookmarkBackdrop =
+  document.querySelector("#bookmarkBackdrop");
+
+const bookmarkClose =
+  document.querySelector("#bookmarkClose");
+
+const saveBookmarkButton =
+  document.querySelector("#saveBookmarkButton");
+
+const bookmarkList =
+  document.querySelector("#bookmarkList");
+
+function currentReference() {
+  return {
+    book: state.book,
+    chapter: state.chapter,
+    verse: state.verse || 1,
+    edition: state.edition
+  };
+}
+
+function renderBookmarks() {
+  const bookmarks = loadBookmarks();
+
+  bookmarkList.replaceChildren();
+
+  if (bookmarks.length === 0) {
+    const empty = document.createElement("p");
+    empty.style.padding = "18px 14px";
+    empty.style.color = "var(--muted-ink)";
+    empty.textContent = "No bookmarks yet.";
+
+    bookmarkList.append(empty);
+    return;
+  }
+
+  for (const bookmark of bookmarks) {
+    const row = document.createElement("div");
+    row.className = "bookmark-item";
+
+    const open = document.createElement("button");
+    open.className = "bookmark-open";
+
+    const reference = document.createElement("span");
+    reference.className = "bookmark-reference";
+    reference.textContent =
+      `${bookmark.book.toUpperCase()} ${bookmark.chapter}:${bookmark.verse}`;
+
+    const meta = document.createElement("span");
+    meta.className = "bookmark-meta";
+    meta.textContent =
+      bookmark.edition === "kjv1611"
+        ? "KJV 1611"
+        : "KJV";
+
+    open.append(reference, meta);
+
+    open.addEventListener("click", async () => {
+      state.book = bookmark.book;
+      state.chapter = bookmark.chapter;
+      state.verse = bookmark.verse;
+      state.edition = bookmark.edition;
+      state.mode = "read";
+
+      bookmarkOverlay.hidden = true;
+
+      await render();
+
+      setTimeout(() => {
+        scripture.querySelector(
+          `[data-verse="${bookmark.verse}"]`
+        )?.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+      }, 100);
+    });
+
+    const remove =
+      document.createElement("button");
+
+    remove.className = "bookmark-remove";
+    remove.textContent = "×";
+    remove.setAttribute(
+      "aria-label",
+      "Remove bookmark"
+    );
+
+    remove.addEventListener("click", () => {
+      const next =
+        loadBookmarks().filter(item =>
+          !(
+            item.book === bookmark.book &&
+            item.chapter === bookmark.chapter &&
+            item.verse === bookmark.verse &&
+            item.edition === bookmark.edition
+          )
+        );
+
+      saveBookmarks(next);
+      renderBookmarks();
+    });
+
+    row.append(open, remove);
+    bookmarkList.append(row);
+  }
+}
+
+function saveCurrentBookmark() {
+  const bookmarks = loadBookmarks();
+  const current = currentReference();
+
+  const exists = bookmarks.some(item =>
+    item.book === current.book &&
+    item.chapter === current.chapter &&
+    item.verse === current.verse &&
+    item.edition === current.edition
+  );
+
+  if (!exists) {
+    bookmarks.unshift(current);
+    saveBookmarks(bookmarks);
+  }
+
+  renderBookmarks();
+}
+
+async function shareCurrentReference() {
+  const url = window.location.href;
+
+  const text =
+    `${state.book} ${state.chapter}:${state.verse || 1} · ${
+      state.edition === "kjv1611" ? "KJV 1611" : "KJV"
+    }`;
+
+  try {
+    if (navigator.share) {
+      await navigator.share({
+        title: "Bible Illuminated",
+        text,
+        url
+      });
+
+      return;
+    }
+
+    await navigator.clipboard.writeText(url);
+
+    shareButton.textContent = "✓";
+
+    setTimeout(() => {
+      shareButton.textContent = "↗";
+    }, 1200);
+
+  } catch {
+    /* User cancelled or clipboard unavailable. */
+  }
+}
+
+bookmarkButton?.addEventListener(
+  "click",
+  () => {
+    bookmarkOverlay.hidden = false;
+    renderBookmarks();
+  }
+);
+
+bookmarkClose?.addEventListener(
+  "click",
+  () => {
+    bookmarkOverlay.hidden = true;
+  }
+);
+
+bookmarkBackdrop?.addEventListener(
+  "click",
+  () => {
+    bookmarkOverlay.hidden = true;
+  }
+);
+
+saveBookmarkButton?.addEventListener(
+  "click",
+  saveCurrentBookmark
+);
+
+shareButton?.addEventListener(
+  "click",
+  shareCurrentReference
+);
