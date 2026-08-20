@@ -1186,6 +1186,30 @@ const fontButtons =
 const densityButtons =
   document.querySelectorAll("[data-density]");
 
+displayButton?.setAttribute(
+  "aria-haspopup",
+  "dialog"
+);
+
+displayButton?.setAttribute(
+  "aria-expanded",
+  "false"
+);
+
+document.addEventListener(
+  "keydown",
+  event => {
+    if (
+      event.key === "Escape" &&
+      displayOverlay &&
+      !displayOverlay.hidden
+    ) {
+      event.preventDefault();
+      closeDisplaySettings();
+    }
+  }
+);
+
 function applyFontSize(size) {
   document.body.classList.remove(
     "text-small",
@@ -1203,9 +1227,17 @@ function applyFontSize(size) {
   );
 
   for (const button of fontButtons) {
+    const active =
+      button.dataset.fontSize === size;
+
     button.classList.toggle(
       "active",
-      button.dataset.fontSize === size
+      active
+    );
+
+    button.setAttribute(
+      "aria-pressed",
+      String(active)
     );
   }
 }
@@ -1222,19 +1254,58 @@ function applyCompareDensity(density) {
   );
 
   for (const button of densityButtons) {
+    const active =
+      button.dataset.density === density;
+
     button.classList.toggle(
       "active",
-      button.dataset.density === density
+      active
+    );
+
+    button.setAttribute(
+      "aria-pressed",
+      String(active)
     );
   }
 }
 
 function openDisplaySettings() {
+  if (!displayOverlay) {
+    return;
+  }
+
   displayOverlay.hidden = false;
+
+  displayButton?.setAttribute(
+    "aria-expanded",
+    "true"
+  );
+
+  const firstControl =
+    displayOverlay.querySelector(
+      "button:not([disabled])"
+    );
+
+  firstControl?.focus();
 }
 
-function closeDisplaySettings() {
+function closeDisplaySettings({
+  restoreFocus = true
+} = {}) {
+  if (!displayOverlay) {
+    return;
+  }
+
   displayOverlay.hidden = true;
+
+  displayButton?.setAttribute(
+    "aria-expanded",
+    "false"
+  );
+
+  if (restoreFocus) {
+    displayButton?.focus();
+  }
 }
 
 displayButton?.addEventListener(
@@ -1244,12 +1315,16 @@ displayButton?.addEventListener(
 
 displayClose?.addEventListener(
   "click",
-  closeDisplaySettings
+  () => {
+    closeDisplaySettings();
+  }
 );
 
 displayBackdrop?.addEventListener(
   "click",
-  closeDisplaySettings
+  () => {
+    closeDisplaySettings();
+  }
 );
 
 fontButtons.forEach(button => {
@@ -1318,9 +1393,17 @@ function applyPageStyle(style) {
   );
 
   for (const button of pageStyleButtons) {
+    const active =
+      button.dataset.pageStyle === safeStyle;
+
     button.classList.toggle(
       "active",
-      button.dataset.pageStyle === safeStyle
+      active
+    );
+
+    button.setAttribute(
+      "aria-pressed",
+      String(active)
     );
   }
 }
