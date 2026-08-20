@@ -336,3 +336,63 @@ body.compare-compact .verse-compare-heading {
     display: none;
   }
 }
+
+/* =========================================================
+   FIX: COMPARISON HEADER OVERLAP / CLIPPING
+   ========================================================= */
+
+/*
+  The sticky verse header previously sat on top of the first
+  comparison panel. Keep it in normal document flow on phones.
+*/
+
+@media (max-width: 899px) {
+
+  body.compare-mode .verse-compare-heading {
+    position: relative;
+    top: auto;
+    z-index: auto;
+
+    margin: 0 0 10px;
+    padding: 10px 4px;
+
+    background: transparent;
+
+    border-bottom:
+      1px solid rgba(89,66,39,.30);
+  }
+
+  body.compare-mode .verse-compare-view {
+    padding-top: 0;
+  }
+
+  body.compare-mode .compare-shell {
+    margin-top: 0;
+  }
+
+  body.compare-mode .compare-panel {
+    overflow: visible;
+  }
+}
+
+/*
+  Desktop/tablet can still use sticky reference heading,
+  but give the content enough clearance underneath.
+*/
+
+@media (min-width: 900px) {
+
+  body.compare-mode .verse-compare-heading {
+    position: sticky;
+    top: 66px;
+
+    margin: 0 0 14px;
+    padding: 10px 4px;
+
+    background: var(--paper);
+  }
+
+  body.compare-mode .compare-shell {
+    padding-top: 2px;
+  }
+}
