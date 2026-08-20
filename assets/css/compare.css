@@ -293,3 +293,46 @@ body.compare-compact .verse-compare-heading {
     padding-top: 2px;
   }
 }
+
+@media (max-width: 619px) {
+  body.compare-compact .compare-shell {
+    gap: 5px;
+  }
+
+  body.compare-compact .compare-panel {
+    padding: 8px 9px 9px;
+  }
+
+  body.compare-compact .compare-panel h3 {
+    margin-bottom: 4px;
+
+    font-size: .57rem;
+    letter-spacing: .10em;
+  }
+
+  body.compare-compact .compare-focus-text {
+    margin: 0;
+
+    font-size:
+      calc(
+        .90rem
+        * var(--reader-scale)
+      );
+
+    line-height: 1.28;
+  }
+
+  body.compare-compact .verse-nav {
+    position: sticky;
+    bottom: 58px;
+    z-index: 7;
+
+    padding-top: 5px;
+
+    background: var(--paper);
+  }
+
+  body.compare-compact .folio-footer {
+    display: none;
+  }
+}

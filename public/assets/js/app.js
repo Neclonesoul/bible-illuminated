@@ -305,6 +305,9 @@ async function render() {
     state.mode === "compare"
   );
 
+  document.body.dataset.edition =
+    state.edition;
+
   scripture.innerHTML =
     `<p class="loading">Opening the Book…</p>`;
 
@@ -1011,4 +1014,48 @@ applyCompareDensity(
   localStorage.getItem(
     "bible-illuminated-compare-density"
   ) || "compact"
+);
+
+const pageStyleButtons =
+  document.querySelectorAll("[data-page-style]");
+
+function applyPageStyle(style) {
+  document.body.classList.remove(
+    "page-folio",
+    "page-reading",
+    "page-nocturne"
+  );
+
+  document.body.classList.add(
+    `page-${style}`
+  );
+
+  localStorage.setItem(
+    "bible-illuminated-page-style",
+    style
+  );
+
+  for (const button of pageStyleButtons) {
+    button.classList.toggle(
+      "active",
+      button.dataset.pageStyle === style
+    );
+  }
+}
+
+pageStyleButtons.forEach(button => {
+  button.addEventListener(
+    "click",
+    () => {
+      applyPageStyle(
+        button.dataset.pageStyle
+      );
+    }
+  );
+});
+
+applyPageStyle(
+  localStorage.getItem(
+    "bible-illuminated-page-style"
+  ) || "folio"
 );

@@ -206,3 +206,193 @@
     padding: 46px 58px 64px;
   }
 }
+
+/* =========================================================
+   1611 TYPOGRAPHY
+   ========================================================= */
+
+@font-face {
+  font-family: "KJV1611";
+  src: url("/assets/fonts/KJV1611.woff2") format("woff2");
+  font-display: swap;
+  font-weight: 400;
+  font-style: normal;
+}
+
+:root {
+  --historical-face: "KJV1611", Georgia, "Times New Roman", serif;
+  --reading-face: Georgia, "Times New Roman", serif;
+}
+
+/*
+  Use the restored 1611 face as display typography rather
+  than forcing long passages into blackletter.
+*/
+
+.title-page h1,
+.chapter-heading h2,
+.title-small,
+.title-cross,
+.ornament,
+.ornamental-rule span {
+  font-family: var(--historical-face);
+}
+
+.title-page h1 {
+  letter-spacing: .01em;
+  line-height: .98;
+}
+
+.chapter-heading h2 {
+  letter-spacing: .025em;
+}
+
+body[data-edition="kjv1611"] .chapter-heading h2 {
+  font-family: var(--historical-face);
+}
+
+/* Historical initial only */
+body[data-edition="kjv1611"] .verse:first-child::first-letter {
+  font-family: var(--historical-face);
+  font-weight: 400;
+}
+
+/* Body remains a readable serif */
+.scripture,
+.compare-focus-text {
+  font-family: var(--reading-face);
+}
+
+/* =========================================================
+   PRINTED FOLIO DETAILS
+   ========================================================= */
+
+.folio {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(53, 35, 18, .10),
+      transparent 6%,
+      transparent 94%,
+      rgba(53, 35, 18, .10)
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(80, 60, 38, .018) 0,
+      rgba(80, 60, 38, .018) 1px,
+      transparent 1px,
+      transparent 4px
+    ),
+    radial-gradient(
+      ellipse at 50% 10%,
+      var(--paper-light),
+      var(--paper) 58%,
+      var(--paper-deep)
+    );
+}
+
+.folio::before {
+  inset: 8px;
+  border:
+    1px solid rgba(74, 52, 30, .58);
+}
+
+.folio::after {
+  inset: 13px;
+  border:
+    double 3px rgba(74, 52, 30, .22);
+}
+
+.chapter-heading::before,
+.chapter-heading::after {
+  content: "❧";
+
+  position: absolute;
+  top: 50%;
+
+  color: rgba(109, 28, 23, .72);
+
+  font-family: var(--historical-face);
+  font-size: .95rem;
+}
+
+.chapter-heading::before {
+  left: 3%;
+}
+
+.chapter-heading::after {
+  right: 3%;
+  transform: scaleX(-1);
+}
+
+@media (max-width: 480px) {
+  .chapter-heading::before,
+  .chapter-heading::after {
+    opacity: .55;
+    font-size: .75rem;
+  }
+}
+
+/* =========================================================
+   PAGE MODES
+   ========================================================= */
+
+body.page-reading .folio-shell {
+  padding-top: 8px;
+}
+
+body.page-reading .folio {
+  max-width: 820px;
+
+  padding-top: 22px;
+
+  background: var(--paper-light);
+
+  box-shadow:
+    0 12px 32px rgba(20,14,7,.18);
+}
+
+body.page-reading .title-page {
+  display: none;
+}
+
+body.page-reading .ornament-top,
+body.page-reading .ornamental-rule {
+  display: none;
+}
+
+body.page-reading .folio::before,
+body.page-reading .folio::after {
+  display: none;
+}
+
+body.page-reading .chapter-heading {
+  padding-top: 8px;
+}
+
+body.page-nocturne {
+  --ink: #ded0b2;
+  --muted-ink: #9f8c69;
+  --paper: #1d1812;
+  --paper-deep: #12100d;
+  --paper-light: #251e16;
+  --rule: #66543b;
+  --accent: #b26252;
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      #292117,
+      #0e0c09 68%
+    );
+}
+
+body.page-nocturne .folio {
+  background:
+    radial-gradient(
+      ellipse at 50% 10%,
+      #2b2319,
+      #1b1711 58%,
+      #12100d
+    );
+}
