@@ -698,3 +698,54 @@ body.page-nocturne .display-panel {
     font-size: clamp(1.22rem, 5.1vw, 2rem);
   }
 }
+
+
+/* =========================================================
+   V1.1 RESPONSIVE CHAPTER BOOK TITLES
+   Length-aware sizing for the actual rendered book heading.
+   ========================================================= */
+
+.chapter-heading h2 {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+
+  white-space: normal;
+  overflow-wrap: normal;
+  word-break: normal;
+
+  text-align: center;
+}
+
+/* Examples: LEVITICUS, MATTHEW */
+.chapter-heading h2.book-title-medium {
+  font-size: clamp(1.9rem, 7vw, 3.15rem);
+}
+
+/* Examples: DEUTERONOMY, ECCLESIASTES */
+.chapter-heading h2.book-title-long {
+  font-size: clamp(1.55rem, 5.8vw, 2.7rem);
+  letter-spacing: -.015em;
+}
+
+/* Examples: THESSALONIANS */
+.chapter-heading h2.book-title-xlong {
+  font-size: clamp(1.3rem, 4.7vw, 2.25rem);
+  letter-spacing: -.025em;
+}
+
+@media (max-width: 480px) {
+  .chapter-heading h2.book-title-medium {
+    font-size: clamp(1.75rem, 6.8vw, 2.45rem);
+  }
+
+  .chapter-heading h2.book-title-long {
+    font-size: clamp(1.42rem, 5.45vw, 2.05rem);
+  }
+
+  .chapter-heading h2.book-title-xlong {
+    font-size: clamp(1.15rem, 4.35vw, 1.72rem);
+  }
+}

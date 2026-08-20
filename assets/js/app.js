@@ -430,6 +430,29 @@ async function render() {
     bookKicker.textContent = kicker;
     bookTitle.textContent = title;
 
+    bookTitle.classList.remove(
+      "book-title-medium",
+      "book-title-long",
+      "book-title-xlong"
+    );
+
+    const displayTitleLength =
+      title.replace(/\s+/g, "").length;
+
+    if (displayTitleLength >= 14) {
+      bookTitle.classList.add(
+        "book-title-xlong"
+      );
+    } else if (displayTitleLength >= 11) {
+      bookTitle.classList.add(
+        "book-title-long"
+      );
+    } else if (displayTitleLength >= 8) {
+      bookTitle.classList.add(
+        "book-title-medium"
+      );
+    }
+
     folioReference.textContent =
       `${historicalBookName(state.book)} ${romanChapter}`;
 
