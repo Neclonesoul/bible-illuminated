@@ -106,10 +106,7 @@
     var(--reading-face, Georgia, "Times New Roman", serif);
 
   font-size:
-    calc(
-      .98rem *
-      var(--reader-scale, 1)
-    );
+    .98rem;
 
   line-height: 1.36;
 
@@ -226,10 +223,7 @@ body.compare-compact .compare-panel h3 {
 
 body.compare-compact .compare-focus-text {
   font-size:
-    calc(
-      .90rem *
-      var(--reader-scale, 1)
-    );
+    .90rem;
 
   line-height: 1.28;
 }
@@ -272,10 +266,7 @@ body.compare-compact .verse-nav button {
 
   .compare-focus-text {
     font-size:
-      calc(
-        1rem *
-        var(--reader-scale, 1)
-      );
+      1rem;
 
     line-height: 1.4;
   }
