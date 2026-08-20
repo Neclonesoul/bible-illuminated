@@ -35,7 +35,7 @@ const folioReference = document.querySelector("#folioReference");
 const bookKicker = document.querySelector("#bookKicker");
 const bookTitle = document.querySelector("#bookTitle");
 
-const navigator = document.querySelector("#navigator");
+const bookNavigator = document.querySelector("#navigator");
 const navigatorBackdrop = document.querySelector("#navigatorBackdrop");
 const navigatorClose = document.querySelector("#navigatorClose");
 const navigatorEdition = document.querySelector("#navigatorEdition");
@@ -371,7 +371,11 @@ function openSearch() {
   }, 50);
 }
 
+let searchGeneration = 0;
+
 async function performSearch(query) {
+  const generation = ++searchGeneration;
+
   searchStatus.textContent =
     "Searching Bible text…";
 
@@ -384,12 +388,33 @@ async function performSearch(query) {
       100
     );
 
+    // Ignore an older search if another search started
+    // before this one completed.
+    if (generation !== searchGeneration) {
+      return;
+    }
+
     searchStatus.textContent =
       results.length === 100
         ? "Showing first 100 matches."
         : `${results.length} match${results.length === 1 ? "" : "es"}.`;
 
+    const fragment =
+      document.createDocumentFragment();
+
+    // Defensive de-duplication by exact Bible reference.
+    const seen = new Set();
+
     for (const result of results) {
+      const key =
+        `${result.book}|${result.chapter}|${result.verse}`;
+
+      if (seen.has(key)) {
+        continue;
+      }
+
+      seen.add(key);
+
       const button =
         document.createElement("button");
 
@@ -447,17 +472,22 @@ async function performSearch(query) {
         }
       );
 
-      searchResults.append(button);
+      fragment.append(button);
     }
 
+    // One DOM operation = no duplicated append race.
+    searchResults.replaceChildren(fragment);
+
   } catch (error) {
-    searchStatus.textContent =
-      error.message;
+    if (generation === searchGeneration) {
+      searchStatus.textContent =
+        error.message;
+    }
   }
 }
 
 async function openNavigator() {
-  navigator.hidden = false;
+  bookNavigator.hidden = false;
 
   bookStage.hidden = false;
   chapterStage.hidden = true;
@@ -531,7 +561,7 @@ function showChapterStage(entry) {
 }
 
 function closeNavigator() {
-  navigator.hidden = true;
+  bookNavigator.hidden = true;
   activeBookEntry = null;
 }
 
@@ -674,7 +704,7 @@ document.addEventListener(
   event => {
     if (
       event.key === "Escape" &&
-      !navigator.hidden
+      !bookNavigator.hidden
     ) {
       closeNavigator();
     }
@@ -714,11 +744,11 @@ searchForm.addEventListener(
 
 render();
 
-if ("serviceWorker" in navigator) {
+if ("serviceWorker" in window.navigator) {
   window.addEventListener(
     "load",
     () => {
-      navigator.serviceWorker
+      window.navigator.serviceWorker
         .register("/sw.js")
         .catch(error => {
           console.error(
@@ -738,13 +768,13 @@ const offlineLibraryStatus =
   document.querySelector("#offlineLibraryStatus");
 
 async function getOfflineWorker() {
-  if (!("serviceWorker" in navigator)) {
+  if (!("serviceWorker" in window.navigator)) {
     return null;
   }
 
   try {
     const registration =
-      await navigator.serviceWorker.ready;
+      await window.navigator.serviceWorker.ready;
 
     return (
       registration.active ||
@@ -784,8 +814,8 @@ offlineLibraryButton?.addEventListener(
   }
 );
 
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.addEventListener(
+if ("serviceWorker" in window.navigator) {
+  window.navigator.serviceWorker.addEventListener(
     "message",
     event => {
       const data = event.data;
