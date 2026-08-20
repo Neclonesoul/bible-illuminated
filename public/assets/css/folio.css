@@ -74,13 +74,20 @@
 }
 
 .title-page h1 {
-  margin: 4px 0 12px;
+  margin: 4px auto 12px;
 
-  font-size: clamp(2.35rem, 11vw, 5rem);
+  max-width: 100%;
+  padding-inline: .08em;
+
+  font-size: clamp(2rem, 9vw, 5rem);
   font-weight: 500;
   line-height: .95;
 
   letter-spacing: -.035em;
+
+  overflow-wrap: anywhere;
+  word-break: normal;
+  text-wrap: balance;
 }
 
 .title-description {
@@ -370,32 +377,6 @@ body.page-reading .chapter-heading {
   padding-top: 8px;
 }
 
-body.page-nocturne {
-  --ink: #ded0b2;
-  --muted-ink: #9f8c69;
-  --paper: #1d1812;
-  --paper-deep: #12100d;
-  --paper-light: #251e16;
-  --rule: #66543b;
-  --accent: #b26252;
-
-  background:
-    radial-gradient(
-      circle at 50% 0%,
-      #292117,
-      #0e0c09 68%
-    );
-}
-
-body.page-nocturne .folio {
-  background:
-    radial-gradient(
-      ellipse at 50% 10%,
-      #2b2319,
-      #1b1711 58%,
-      #12100d
-    );
-}
 
 /* =========================================================
    CHAPTER OPENING DEVICE
@@ -542,10 +523,12 @@ body.page-reading .chapter-heading {
   .title-page h1 {
     font-size:
       clamp(
-        2.15rem,
-        10vw,
-        3.45rem
+        1.7rem,
+        8.2vw,
+        3.15rem
       );
+
+    line-height: 1;
   }
 
   .title-description {
@@ -658,4 +641,111 @@ body.page-nocturne .display-panel {
 .reader-controls {
   background: rgba(21,18,14,.97);
   color: #e8dcc1;
+}
+
+/* =========================================================
+   V1.1 LENGTH-AWARE BOOK TITLES
+   Preserve monumental short titles while fitting long names.
+   ========================================================= */
+
+.title-page h1 {
+  box-sizing: border-box;
+
+  width: 100%;
+  max-width: 100%;
+
+  margin-inline: auto;
+  padding-inline: .08em;
+
+  text-align: center;
+  line-height: .92;
+
+  white-space: normal;
+  overflow: visible;
+
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+/* Medium-length titles */
+.title-page h1.book-title-medium {
+  font-size: clamp(1.9rem, 7.4vw, 4.25rem);
+  letter-spacing: -.045em;
+}
+
+/* Long titles: Deuteronomy, Ecclesiastes, Thessalonians, etc. */
+.title-page h1.book-title-long {
+  font-size: clamp(1.55rem, 6.1vw, 3.55rem);
+  letter-spacing: -.055em;
+}
+
+/* Very long title plus numeric prefix */
+.title-page h1.book-title-xlong {
+  font-size: clamp(1.35rem, 5.35vw, 3rem);
+  letter-spacing: -.06em;
+}
+
+@media (max-width: 480px) {
+  .title-page h1.book-title-medium {
+    font-size: clamp(1.75rem, 7.3vw, 2.8rem);
+  }
+
+  .title-page h1.book-title-long {
+    font-size: clamp(1.4rem, 5.9vw, 2.35rem);
+  }
+
+  .title-page h1.book-title-xlong {
+    font-size: clamp(1.22rem, 5.1vw, 2rem);
+  }
+}
+
+
+/* =========================================================
+   V1.1 RESPONSIVE CHAPTER BOOK TITLES
+   Length-aware sizing for the actual rendered book heading.
+   ========================================================= */
+
+.chapter-heading h2 {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+
+  white-space: normal;
+  overflow-wrap: normal;
+  word-break: normal;
+
+  text-align: center;
+}
+
+/* Examples: LEVITICUS, MATTHEW */
+.chapter-heading h2.book-title-medium {
+  font-size: clamp(1.9rem, 7vw, 3.15rem);
+}
+
+/* Examples: DEUTERONOMY, ECCLESIASTES */
+.chapter-heading h2.book-title-long {
+  font-size: clamp(1.55rem, 5.8vw, 2.7rem);
+  letter-spacing: -.015em;
+}
+
+/* Examples: THESSALONIANS */
+.chapter-heading h2.book-title-xlong {
+  font-size: clamp(1.3rem, 4.7vw, 2.25rem);
+  letter-spacing: -.025em;
+}
+
+@media (max-width: 480px) {
+  .chapter-heading h2.book-title-medium {
+    font-size: clamp(1.75rem, 6.8vw, 2.45rem);
+  }
+
+  .chapter-heading h2.book-title-long {
+    font-size: clamp(1.42rem, 5.45vw, 2.05rem);
+  }
+
+  .chapter-heading h2.book-title-xlong {
+    font-size: clamp(1.15rem, 4.35vw, 1.72rem);
+  }
 }

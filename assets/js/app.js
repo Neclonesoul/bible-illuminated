@@ -430,6 +430,29 @@ async function render() {
     bookKicker.textContent = kicker;
     bookTitle.textContent = title;
 
+    bookTitle.classList.remove(
+      "book-title-medium",
+      "book-title-long",
+      "book-title-xlong"
+    );
+
+    const displayTitleLength =
+      title.replace(/\s+/g, "").length;
+
+    if (displayTitleLength >= 14) {
+      bookTitle.classList.add(
+        "book-title-xlong"
+      );
+    } else if (displayTitleLength >= 11) {
+      bookTitle.classList.add(
+        "book-title-long"
+      );
+    } else if (displayTitleLength >= 8) {
+      bookTitle.classList.add(
+        "book-title-medium"
+      );
+    }
+
     folioReference.textContent =
       `${historicalBookName(state.book)} ${romanChapter}`;
 
@@ -1186,6 +1209,30 @@ const fontButtons =
 const densityButtons =
   document.querySelectorAll("[data-density]");
 
+displayButton?.setAttribute(
+  "aria-haspopup",
+  "dialog"
+);
+
+displayButton?.setAttribute(
+  "aria-expanded",
+  "false"
+);
+
+document.addEventListener(
+  "keydown",
+  event => {
+    if (
+      event.key === "Escape" &&
+      displayOverlay &&
+      !displayOverlay.hidden
+    ) {
+      event.preventDefault();
+      closeDisplaySettings();
+    }
+  }
+);
+
 function applyFontSize(size) {
   document.body.classList.remove(
     "text-small",
@@ -1203,9 +1250,17 @@ function applyFontSize(size) {
   );
 
   for (const button of fontButtons) {
+    const active =
+      button.dataset.fontSize === size;
+
     button.classList.toggle(
       "active",
-      button.dataset.fontSize === size
+      active
+    );
+
+    button.setAttribute(
+      "aria-pressed",
+      String(active)
     );
   }
 }
@@ -1222,19 +1277,58 @@ function applyCompareDensity(density) {
   );
 
   for (const button of densityButtons) {
+    const active =
+      button.dataset.density === density;
+
     button.classList.toggle(
       "active",
-      button.dataset.density === density
+      active
+    );
+
+    button.setAttribute(
+      "aria-pressed",
+      String(active)
     );
   }
 }
 
 function openDisplaySettings() {
+  if (!displayOverlay) {
+    return;
+  }
+
   displayOverlay.hidden = false;
+
+  displayButton?.setAttribute(
+    "aria-expanded",
+    "true"
+  );
+
+  const firstControl =
+    displayOverlay.querySelector(
+      "button:not([disabled])"
+    );
+
+  firstControl?.focus();
 }
 
-function closeDisplaySettings() {
+function closeDisplaySettings({
+  restoreFocus = true
+} = {}) {
+  if (!displayOverlay) {
+    return;
+  }
+
   displayOverlay.hidden = true;
+
+  displayButton?.setAttribute(
+    "aria-expanded",
+    "false"
+  );
+
+  if (restoreFocus) {
+    displayButton?.focus();
+  }
 }
 
 displayButton?.addEventListener(
@@ -1244,12 +1338,16 @@ displayButton?.addEventListener(
 
 displayClose?.addEventListener(
   "click",
-  closeDisplaySettings
+  () => {
+    closeDisplaySettings();
+  }
 );
 
 displayBackdrop?.addEventListener(
   "click",
-  closeDisplaySettings
+  () => {
+    closeDisplaySettings();
+  }
 );
 
 fontButtons.forEach(button => {
@@ -1289,7 +1387,19 @@ applyCompareDensity(
 const pageStyleButtons =
   document.querySelectorAll("[data-page-style]");
 
+const PAGE_STYLES =
+  new Set([
+    "folio",
+    "reading",
+    "nocturne"
+  ]);
+
 function applyPageStyle(style) {
+  const safeStyle =
+    PAGE_STYLES.has(style)
+      ? style
+      : "folio";
+
   document.body.classList.remove(
     "page-folio",
     "page-reading",
@@ -1297,18 +1407,26 @@ function applyPageStyle(style) {
   );
 
   document.body.classList.add(
-    `page-${style}`
+    `page-${safeStyle}`
   );
 
   localStorage.setItem(
     "bible-illuminated-page-style",
-    style
+    safeStyle
   );
 
   for (const button of pageStyleButtons) {
+    const active =
+      button.dataset.pageStyle === safeStyle;
+
     button.classList.toggle(
       "active",
-      button.dataset.pageStyle === style
+      active
+    );
+
+    button.setAttribute(
+      "aria-pressed",
+      String(active)
     );
   }
 }
