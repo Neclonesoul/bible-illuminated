@@ -1,3 +1,4 @@
+<img width="2839" height="1440" alt="Screenshot_20260820_200818_Gallery" src="https://github.com/user-attachments/assets/8d9017dd-5dac-41ba-9ec0-ddcf53b961c7" />
 # Bible Illuminated
 
 **A modern digital Bible reader inspired by the beauty of historic illuminated and early printed Bibles.**
