@@ -1,7 +1,9 @@
-#!/data/data/com.termux/files/usr/bin/bash
-set -e
+#!/usr/bin/env bash
+set -euo pipefail
 
 cd "$(dirname "$0")/.."
+
+echo "Building Bible Illuminated public directory..."
 
 rm -rf public
 mkdir -p public
@@ -13,4 +15,7 @@ cp sw.js public/
 cp -r assets public/
 cp -r data public/
 
-echo "Bible Illuminated public/ build complete."
+echo
+echo "Bible Illuminated build complete."
+echo "Files:"
+find public -maxdepth 2 -type f | sort | head -n 40
