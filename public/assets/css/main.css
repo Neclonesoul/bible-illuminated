@@ -1791,3 +1791,33 @@ body.page-nocturne #tutorialNext {
     font-size: .80rem;
   }
 }
+
+
+/* =========================================================
+   QUICK TOUR REPLAY
+   ========================================================= */
+
+.replay-tutorial-button {
+  width: 100%;
+  min-height: 44px;
+
+  padding: 0 14px;
+
+  border: 1px solid var(--rule);
+
+  color: var(--ink);
+  background: transparent;
+
+  font: inherit;
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+
+  cursor: pointer;
+}
+
+.replay-tutorial-button:hover,
+.replay-tutorial-button:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+}

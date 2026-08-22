@@ -1358,6 +1358,9 @@ const tutorialSkip =
 const tutorialNext =
   document.querySelector("#tutorialNext");
 
+const replayTutorialButton =
+  document.querySelector("#replayTutorialButton");
+
 const TUTORIAL_COMPLETE_KEY =
   "bible-illuminated-tutorial-complete";
 
@@ -1644,6 +1647,24 @@ tutorialBack?.addEventListener(
 tutorialSkip?.addEventListener(
   "click",
   finishTutorial
+);
+
+replayTutorialButton?.addEventListener(
+  "click",
+  () => {
+    closeDisplaySettings({
+      restoreFocus: false
+    });
+
+    window.setTimeout(
+      () => {
+        startTutorial({
+          force: true
+        });
+      },
+      180
+    );
+  }
 );
 
 
