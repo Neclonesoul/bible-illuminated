@@ -15,6 +15,11 @@ cp sw.js public/
 cp -r assets public/
 cp -r data public/
 
+# Public privacy policy required for store distribution
+if [ -d privacy ]; then
+  cp -r privacy public/
+fi
+
 # Android Trusted Web Activity verification
 if [ -d .well-known ]; then
   mkdir -p public/.well-known
