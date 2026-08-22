@@ -12,7 +12,7 @@
 
 **KJV · KJV 1611 · Offline · Installable · Responsive**
 
-[**OPEN THE LIVE READER**](https://bible-illuminated.barnestyson.workers.dev/)
+[**OPEN THE LIVE READER**](https://kjv.tysonbarnes.co.uk/)
 
 </div>
 
