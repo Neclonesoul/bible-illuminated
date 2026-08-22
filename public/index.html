@@ -334,6 +334,11 @@
     aria-labelledby="installPromptTitle"
     hidden
   >
+    <div
+      class="install-prompt__backdrop"
+      id="installPromptBackdrop"
+    ></div>
+
     <div class="install-prompt__card">
       <button
         class="install-prompt__close"
@@ -382,6 +387,66 @@
         </button>
       </div>
     </div>
+  </aside>
+
+
+  <aside
+    class="tutorial"
+    id="tutorial"
+    aria-live="polite"
+    hidden
+  >
+    <div
+      class="tutorial-spotlight"
+      id="tutorialSpotlight"
+    ></div>
+
+    <section
+      class="tutorial-card"
+      id="tutorialCard"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="tutorialTitle"
+    >
+      <p
+        class="tutorial-step"
+        id="tutorialStep"
+      ></p>
+
+      <h2 id="tutorialTitle"></h2>
+
+      <p
+        class="tutorial-copy"
+        id="tutorialCopy"
+      ></p>
+
+      <div class="tutorial-progress">
+        <span id="tutorialProgress"></span>
+      </div>
+
+      <div class="tutorial-actions">
+        <button
+          id="tutorialBack"
+          type="button"
+        >
+          BACK
+        </button>
+
+        <button
+          id="tutorialSkip"
+          type="button"
+        >
+          SKIP
+        </button>
+
+        <button
+          id="tutorialNext"
+          type="button"
+        >
+          NEXT
+        </button>
+      </div>
+    </section>
   </aside>
 
 </body>
