@@ -1187,6 +1187,127 @@ if (
   offlineLibraryButton.disabled = true;
 }
 
+
+/* =========================================================
+   PWA INSTALL PROMPT
+   ========================================================= */
+
+const installPrompt =
+  document.querySelector("#installPrompt");
+
+const installPromptInstall =
+  document.querySelector("#installPromptInstall");
+
+const installPromptLater =
+  document.querySelector("#installPromptLater");
+
+const installPromptClose =
+  document.querySelector("#installPromptClose");
+
+let deferredInstallPrompt = null;
+
+const INSTALL_DISMISS_KEY =
+  "bible-illuminated-install-dismissed";
+
+function isStandalone() {
+  return (
+    window.matchMedia(
+      "(display-mode: standalone)"
+    ).matches ||
+    window.navigator.standalone === true
+  );
+}
+
+function hideInstallPrompt({
+  remember = false
+} = {}) {
+  if (!installPrompt) {
+    return;
+  }
+
+  installPrompt.hidden = true;
+
+  if (remember) {
+    localStorage.setItem(
+      INSTALL_DISMISS_KEY,
+      "true"
+    );
+  }
+}
+
+function showInstallPrompt() {
+  if (
+    !installPrompt ||
+    isStandalone() ||
+    localStorage.getItem(
+      INSTALL_DISMISS_KEY
+    ) === "true"
+  ) {
+    return;
+  }
+
+  installPrompt.hidden = false;
+}
+
+window.addEventListener(
+  "beforeinstallprompt",
+  event => {
+    event.preventDefault();
+
+    deferredInstallPrompt = event;
+
+    window.setTimeout(
+      showInstallPrompt,
+      1800
+    );
+  }
+);
+
+installPromptInstall?.addEventListener(
+  "click",
+  async () => {
+    if (!deferredInstallPrompt) {
+      return;
+    }
+
+    installPrompt.hidden = true;
+
+    await deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+
+    deferredInstallPrompt = null;
+  }
+);
+
+installPromptLater?.addEventListener(
+  "click",
+  () => {
+    hideInstallPrompt({
+      remember: true
+    });
+  }
+);
+
+installPromptClose?.addEventListener(
+  "click",
+  () => {
+    hideInstallPrompt({
+      remember: true
+    });
+  }
+);
+
+window.addEventListener(
+  "appinstalled",
+  () => {
+    deferredInstallPrompt = null;
+
+    hideInstallPrompt({
+      remember: true
+    });
+  }
+);
+
 /* =========================================================
    DISPLAY SETTINGS
    ========================================================= */

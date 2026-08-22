@@ -1292,3 +1292,208 @@ body {
     font-size: .84rem;
   }
 }
+
+
+/* =========================================================
+   PWA INSTALL PROMPT
+   ========================================================= */
+
+.install-prompt[hidden] {
+  display: none;
+}
+
+.install-prompt {
+  position: fixed;
+  z-index: 1200;
+  inset:
+    auto
+    12px
+    calc(82px + env(safe-area-inset-bottom))
+    12px;
+
+  display: flex;
+  justify-content: center;
+
+  pointer-events: none;
+}
+
+.install-prompt__card {
+  position: relative;
+
+  width: min(440px, 100%);
+  padding:
+    22px
+    20px
+    18px;
+
+  color: var(--ink);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(250,246,237,.985),
+      rgba(232,220,193,.985)
+    );
+
+  border: 1px solid rgba(117,96,68,.55);
+  border-radius: 3px;
+
+  box-shadow:
+    0 22px 55px rgba(0,0,0,.36),
+    inset 0 0 30px rgba(109,28,23,.035);
+
+  pointer-events: auto;
+}
+
+.install-prompt__card::before {
+  content: "";
+
+  position: absolute;
+  inset: 6px;
+
+  border: 1px solid rgba(117,96,68,.28);
+
+  pointer-events: none;
+}
+
+.install-prompt__close {
+  position: absolute;
+  z-index: 2;
+  top: 8px;
+  right: 10px;
+
+  width: 38px;
+  height: 38px;
+
+  border: 0;
+  background: transparent;
+
+  color: var(--muted-ink);
+
+  font: inherit;
+  font-size: 1.35rem;
+
+  cursor: pointer;
+}
+
+.install-prompt__eyebrow {
+  margin: 0 40px 7px 0;
+
+  color: var(--accent);
+
+  font-size: .58rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+}
+
+.install-prompt h2 {
+  margin: 0 36px 8px 0;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: clamp(1.25rem, 5vw, 1.65rem);
+  font-weight: 500;
+  line-height: 1.08;
+}
+
+.install-prompt__copy {
+  margin: 0 0 13px;
+
+  color: var(--muted-ink);
+
+  font-size: .88rem;
+  line-height: 1.45;
+}
+
+.install-prompt__benefits {
+  margin:
+    0
+    0
+    16px;
+  padding-left: 1.15rem;
+
+  color: var(--ink);
+
+  font-size: .78rem;
+  line-height: 1.55;
+}
+
+.install-prompt__actions {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+}
+
+.install-prompt__install,
+.install-prompt__later {
+  min-height: 44px;
+
+  padding:
+    0
+    14px;
+
+  font: inherit;
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .11em;
+
+  cursor: pointer;
+}
+
+.install-prompt__install {
+  border: 1px solid #531712;
+
+  color: #f4ecd8;
+  background: #6d1c17;
+}
+
+.install-prompt__later {
+  border: 1px solid rgba(117,96,68,.45);
+
+  color: var(--muted-ink);
+  background: transparent;
+}
+
+body.page-nocturne .install-prompt__card {
+  color: var(--ink);
+
+  background:
+    linear-gradient(
+      180deg,
+      #292219,
+      #1b1711
+    );
+
+  border-color: #655642;
+}
+
+body.page-nocturne .install-prompt__install {
+  background: #873b31;
+  border-color: #a85a4d;
+}
+
+@media (max-width: 430px) {
+  .install-prompt {
+    inset:
+      auto
+      8px
+      calc(76px + env(safe-area-inset-bottom))
+      8px;
+  }
+
+  .install-prompt__card {
+    padding:
+      19px
+      16px
+      15px;
+  }
+
+  .install-prompt__actions {
+    grid-template-columns:
+      minmax(0, 1fr)
+      auto;
+  }
+}
