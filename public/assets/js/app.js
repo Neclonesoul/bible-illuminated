@@ -1187,6 +1187,571 @@ if (
   offlineLibraryButton.disabled = true;
 }
 
+
+
+/* =========================================================
+   SERVICE WORKER UPDATE LIFECYCLE
+   ========================================================= */
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener(
+    "load",
+    async () => {
+      try {
+        const registration =
+          await navigator.serviceWorker.ready;
+
+        await registration.update();
+      } catch {
+        /* Offline startup remains valid. */
+      }
+    }
+  );
+
+  let refreshing = false;
+
+  navigator.serviceWorker.addEventListener(
+    "controllerchange",
+    () => {
+      if (refreshing) {
+        return;
+      }
+
+      refreshing = true;
+
+      window.location.reload();
+    }
+  );
+}
+
+/* =========================================================
+   PWA INSTALL PROMPT
+   ========================================================= */
+
+const installPrompt =
+  document.querySelector("#installPrompt");
+
+const installPromptInstall =
+  document.querySelector("#installPromptInstall");
+
+const installPromptLater =
+  document.querySelector("#installPromptLater");
+
+const installPromptClose =
+  document.querySelector("#installPromptClose");
+
+let deferredInstallPrompt = null;
+
+const INSTALL_DISMISS_KEY =
+  "bible-illuminated-install-dismissed";
+
+function isStandalone() {
+  return (
+    window.matchMedia(
+      "(display-mode: standalone)"
+    ).matches ||
+    window.navigator.standalone === true
+  );
+}
+
+function hideInstallPrompt({
+  remember = false
+} = {}) {
+  if (!installPrompt) {
+    return;
+  }
+
+  installPrompt.hidden = true;
+  installPromptVisible = false;
+
+  if (remember) {
+    localStorage.setItem(
+      INSTALL_DISMISS_KEY,
+      "true"
+    );
+  }
+}
+
+function showInstallPrompt() {
+  if (
+    !installPrompt ||
+    isStandalone() ||
+    localStorage.getItem(
+      INSTALL_DISMISS_KEY
+    ) === "true"
+  ) {
+    return;
+  }
+
+  installPrompt.hidden = false;
+  installPromptVisible = true;
+}
+
+let installPromptAvailable = false;
+let installPromptVisible = false;
+
+function scheduleTutorialFallback() {
+  window.setTimeout(
+    () => {
+      if (
+        !installPromptAvailable &&
+        !installPromptVisible &&
+        !tutorialCompleted() &&
+        !isStandalone()
+      ) {
+        startTutorial();
+      }
+    },
+    2600
+  );
+}
+
+window.addEventListener(
+  "load",
+  scheduleTutorialFallback
+);
+
+window.addEventListener(
+  "beforeinstallprompt",
+  event => {
+    event.preventDefault();
+
+    installPromptAvailable = true;
+    deferredInstallPrompt = event;
+
+    window.setTimeout(
+      showInstallPrompt,
+      1800
+    );
+  }
+);
+
+installPromptInstall?.addEventListener(
+  "click",
+  async () => {
+    if (!deferredInstallPrompt) {
+      return;
+    }
+
+    installPrompt.hidden = true;
+
+    await deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+
+    deferredInstallPrompt = null;
+
+    window.setTimeout(
+      () => startTutorial(),
+      350
+    );
+  }
+);
+
+installPromptLater?.addEventListener(
+  "click",
+  () => {
+    hideInstallPrompt({
+      remember: true
+    });
+
+    window.setTimeout(
+      () => startTutorial(),
+      250
+    );
+  }
+);
+
+installPromptClose?.addEventListener(
+  "click",
+  () => {
+    hideInstallPrompt({
+      remember: true
+    });
+
+    window.setTimeout(
+      () => startTutorial(),
+      250
+    );
+  }
+);
+
+window.addEventListener(
+  "appinstalled",
+  () => {
+    deferredInstallPrompt = null;
+
+    hideInstallPrompt({
+      remember: true
+    });
+  }
+);
+
+
+/* =========================================================
+   FIRST-RUN GUIDED TUTORIAL
+   ========================================================= */
+
+const tutorial =
+  document.querySelector("#tutorial");
+
+const tutorialSpotlight =
+  document.querySelector("#tutorialSpotlight");
+
+const tutorialCard =
+  document.querySelector("#tutorialCard");
+
+const tutorialStep =
+  document.querySelector("#tutorialStep");
+
+const tutorialTitle =
+  document.querySelector("#tutorialTitle");
+
+const tutorialCopy =
+  document.querySelector("#tutorialCopy");
+
+const tutorialProgress =
+  document.querySelector("#tutorialProgress");
+
+const tutorialBack =
+  document.querySelector("#tutorialBack");
+
+const tutorialSkip =
+  document.querySelector("#tutorialSkip");
+
+const tutorialNext =
+  document.querySelector("#tutorialNext");
+
+const replayTutorialButton =
+  document.querySelector("#replayTutorialButton");
+
+const TUTORIAL_COMPLETE_KEY =
+  "bible-illuminated-tutorial-complete";
+
+let tutorialIndex = 0;
+
+
+/*
+  The tour follows the physical controls from the top bar
+  through the bottom reader controls.
+*/
+const tutorialSteps = [
+  {
+    target: "#booksButton",
+    title: "Books & chapters",
+    copy:
+      "Open the Bible library, choose a book, then jump directly to any chapter."
+  },
+  {
+    target: "#referenceButton",
+    title: "Go straight to a reference",
+    copy:
+      "Use § when you already know where you want to read — for example John 3:16 or Psalms 23."
+  },
+  {
+    target: "#searchButton",
+    title: "Search Scripture",
+    copy:
+      "Search words or phrases across the selected Bible edition and open a matching verse immediately."
+  },
+  {
+    target: "#displayButton",
+    title: "Shape the reading experience",
+    copy:
+      "Aa controls text size, Folio, Reading and Nocturne appearance, plus comparison density."
+  },
+  {
+    target: "#bookmarkButton",
+    title: "Keep your place",
+    copy:
+      "Save references as bookmarks so important passages remain easy to return to."
+  },
+  {
+    target: "#editionButton",
+    title: "Change Bible edition",
+    copy:
+      "Switch between the modern KJV presentation and the KJV 1611 edition from the reader controls."
+  },
+  {
+    target: "#compareButton",
+    title: "Compare editions",
+    copy:
+      "Open comparison mode to examine the current verse across editions without losing your place."
+  },
+  {
+    target: "#previousChapter",
+    title: "Move through Scripture",
+    copy:
+      "Use the chapter arrows to continue naturally backward or forward through the Bible."
+  }
+];
+
+
+function tutorialCompleted() {
+  return (
+    localStorage.getItem(
+      TUTORIAL_COMPLETE_KEY
+    ) === "true"
+  );
+}
+
+
+function finishTutorial() {
+  if (!tutorial) {
+    return;
+  }
+
+  tutorial.hidden = true;
+
+  localStorage.setItem(
+    TUTORIAL_COMPLETE_KEY,
+    "true"
+  );
+}
+
+
+function positionTutorial() {
+  if (
+    !tutorial ||
+    tutorial.hidden
+  ) {
+    return;
+  }
+
+  const step =
+    tutorialSteps[tutorialIndex];
+
+  const target =
+    document.querySelector(step.target);
+
+  if (
+    !target ||
+    !tutorialSpotlight ||
+    !tutorialCard
+  ) {
+    return;
+  }
+
+  const rect =
+    target.getBoundingClientRect();
+
+  const padding = 6;
+
+  tutorialSpotlight.style.top =
+    `${Math.max(4, rect.top - padding)}px`;
+
+  tutorialSpotlight.style.left =
+    `${Math.max(4, rect.left - padding)}px`;
+
+  tutorialSpotlight.style.width =
+    `${rect.width + padding * 2}px`;
+
+  tutorialSpotlight.style.height =
+    `${rect.height + padding * 2}px`;
+
+
+  /*
+    Place card below target where possible.
+    If insufficient room exists, place it above.
+  */
+
+  const cardWidth =
+    Math.min(
+      360,
+      window.innerWidth - 24
+    );
+
+  tutorialCard.style.width =
+    `${cardWidth}px`;
+
+  const margin = 12;
+
+  let left =
+    rect.left +
+    rect.width / 2 -
+    cardWidth / 2;
+
+  left =
+    Math.max(
+      8,
+      Math.min(
+        left,
+        window.innerWidth -
+        cardWidth -
+        8
+      )
+    );
+
+  tutorialCard.style.left =
+    `${left}px`;
+
+  /*
+    Temporarily position below so card height can be measured.
+  */
+
+  tutorialCard.style.top =
+    `${rect.bottom + margin}px`;
+
+  const cardRect =
+    tutorialCard.getBoundingClientRect();
+
+  const roomBelow =
+    window.innerHeight -
+    rect.bottom;
+
+  if (
+    roomBelow <
+    cardRect.height + margin + 8
+  ) {
+    const top =
+      Math.max(
+        8,
+        rect.top -
+        cardRect.height -
+        margin
+      );
+
+    tutorialCard.style.top =
+      `${top}px`;
+  }
+}
+
+
+function renderTutorialStep() {
+  if (!tutorial) {
+    return;
+  }
+
+  const step =
+    tutorialSteps[tutorialIndex];
+
+  tutorialStep.textContent =
+    `QUICK TOUR · ${tutorialIndex + 1} OF ${tutorialSteps.length}`;
+
+  tutorialTitle.textContent =
+    step.title;
+
+  tutorialCopy.textContent =
+    step.copy;
+
+  tutorialProgress.style.width =
+    `${(
+      (tutorialIndex + 1) /
+      tutorialSteps.length
+    ) * 100}%`;
+
+  tutorialBack.disabled =
+    tutorialIndex === 0;
+
+  tutorialNext.textContent =
+    tutorialIndex ===
+    tutorialSteps.length - 1
+      ? "START READING"
+      : "NEXT";
+
+  requestAnimationFrame(
+    positionTutorial
+  );
+}
+
+
+function startTutorial({
+  force = false
+} = {}) {
+  if (
+    !tutorial ||
+    (
+      tutorialCompleted() &&
+      !force
+    )
+  ) {
+    return;
+  }
+
+  tutorialIndex = 0;
+
+  tutorial.hidden = false;
+
+  renderTutorialStep();
+}
+
+
+tutorialNext?.addEventListener(
+  "click",
+  () => {
+    if (
+      tutorialIndex >=
+      tutorialSteps.length - 1
+    ) {
+      finishTutorial();
+      return;
+    }
+
+    tutorialIndex++;
+
+    renderTutorialStep();
+  }
+);
+
+
+tutorialBack?.addEventListener(
+  "click",
+  () => {
+    if (tutorialIndex === 0) {
+      return;
+    }
+
+    tutorialIndex--;
+
+    renderTutorialStep();
+  }
+);
+
+
+tutorialSkip?.addEventListener(
+  "click",
+  finishTutorial
+);
+
+replayTutorialButton?.addEventListener(
+  "click",
+  () => {
+    closeDisplaySettings({
+      restoreFocus: false
+    });
+
+    window.setTimeout(
+      () => {
+        startTutorial({
+          force: true
+        });
+      },
+      180
+    );
+  }
+);
+
+
+window.addEventListener(
+  "resize",
+  () => {
+    requestAnimationFrame(
+      positionTutorial
+    );
+  }
+);
+
+
+window.addEventListener(
+  "orientationchange",
+  () => {
+    window.setTimeout(
+      positionTutorial,
+      180
+    );
+  }
+);
+
+
 /* =========================================================
    DISPLAY SETTINGS
    ========================================================= */

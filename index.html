@@ -236,7 +236,20 @@
           <button data-density="compact">COMPACT</button>
           <button data-density="comfortable">COMFORTABLE</button>
         </div>
-      </div>
+
+      <section class="display-section display-help">
+        <p>HELP</p>
+
+        <button
+          id="replayTutorialButton"
+          class="replay-tutorial-button"
+          type="button"
+        >
+          QUICK TOUR
+        </button>
+      </section>
+
+</div>
 
       <p class="display-note">
         Compact comparison reduces ornament, spacing and text size so both editions remain visible with less scrolling.
@@ -326,6 +339,128 @@
   </nav>
 
   <script type="module" src="/assets/js/app.js"></script>
+
+
+  <aside
+    class="install-prompt"
+    id="installPrompt"
+    aria-labelledby="installPromptTitle"
+    hidden
+  >
+    <div
+      class="install-prompt__backdrop"
+      id="installPromptBackdrop"
+    ></div>
+
+    <div class="install-prompt__card">
+      <button
+        class="install-prompt__close"
+        id="installPromptClose"
+        type="button"
+        aria-label="Dismiss install suggestion"
+      >
+        ×
+      </button>
+
+      <p class="install-prompt__eyebrow">
+        BIBLE ILLUMINATED
+      </p>
+
+      <h2 id="installPromptTitle">
+        Keep the Bible close at hand
+      </h2>
+
+      <p class="install-prompt__copy">
+        Install Bible Illuminated for quicker access,
+        offline reading, and a focused full-screen
+        experience from your home screen.
+      </p>
+
+      <ul class="install-prompt__benefits">
+        <li>Read Scripture offline</li>
+        <li>Open directly from your home screen</li>
+        <li>Keep bookmarks and reading preferences</li>
+      </ul>
+
+      <div class="install-prompt__actions">
+        <button
+          class="install-prompt__install"
+          id="installPromptInstall"
+          type="button"
+        >
+          INSTALL BIBLE
+        </button>
+
+        <button
+          class="install-prompt__later"
+          id="installPromptLater"
+          type="button"
+        >
+          NOT NOW
+        </button>
+      </div>
+    </div>
+  </aside>
+
+
+  <aside
+    class="tutorial"
+    id="tutorial"
+    aria-live="polite"
+    hidden
+  >
+    <div
+      class="tutorial-spotlight"
+      id="tutorialSpotlight"
+    ></div>
+
+    <section
+      class="tutorial-card"
+      id="tutorialCard"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="tutorialTitle"
+    >
+      <p
+        class="tutorial-step"
+        id="tutorialStep"
+      ></p>
+
+      <h2 id="tutorialTitle"></h2>
+
+      <p
+        class="tutorial-copy"
+        id="tutorialCopy"
+      ></p>
+
+      <div class="tutorial-progress">
+        <span id="tutorialProgress"></span>
+      </div>
+
+      <div class="tutorial-actions">
+        <button
+          id="tutorialBack"
+          type="button"
+        >
+          BACK
+        </button>
+
+        <button
+          id="tutorialSkip"
+          type="button"
+        >
+          SKIP
+        </button>
+
+        <button
+          id="tutorialNext"
+          type="button"
+        >
+          NEXT
+        </button>
+      </div>
+    </section>
+  </aside>
 
 </body>
 </html>

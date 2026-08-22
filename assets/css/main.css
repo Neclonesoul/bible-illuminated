@@ -1292,3 +1292,532 @@ body {
     font-size: .84rem;
   }
 }
+
+
+/* =========================================================
+   PWA INSTALL PROMPT
+   ========================================================= */
+
+.install-prompt[hidden] {
+  display: none;
+}
+
+.install-prompt {
+  position: fixed;
+  z-index: 1200;
+  inset:
+    auto
+    12px
+    calc(82px + env(safe-area-inset-bottom))
+    12px;
+
+  display: flex;
+  justify-content: center;
+
+  pointer-events: none;
+}
+
+.install-prompt__card {
+  position: relative;
+
+  width: min(440px, 100%);
+  padding:
+    22px
+    20px
+    18px;
+
+  color: var(--ink);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(250,246,237,.985),
+      rgba(232,220,193,.985)
+    );
+
+  border: 1px solid rgba(117,96,68,.55);
+  border-radius: 3px;
+
+  box-shadow:
+    0 22px 55px rgba(0,0,0,.36),
+    inset 0 0 30px rgba(109,28,23,.035);
+
+  pointer-events: auto;
+}
+
+.install-prompt__card::before {
+  content: "";
+
+  position: absolute;
+  inset: 6px;
+
+  border: 1px solid rgba(117,96,68,.28);
+
+  pointer-events: none;
+}
+
+.install-prompt__close {
+  position: absolute;
+  z-index: 2;
+  top: 8px;
+  right: 10px;
+
+  width: 38px;
+  height: 38px;
+
+  border: 0;
+  background: transparent;
+
+  color: var(--muted-ink);
+
+  font: inherit;
+  font-size: 1.35rem;
+
+  cursor: pointer;
+}
+
+.install-prompt__eyebrow {
+  margin: 0 40px 7px 0;
+
+  color: var(--accent);
+
+  font-size: .58rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+}
+
+.install-prompt h2 {
+  margin: 0 36px 8px 0;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: clamp(1.25rem, 5vw, 1.65rem);
+  font-weight: 500;
+  line-height: 1.08;
+}
+
+.install-prompt__copy {
+  margin: 0 0 13px;
+
+  color: var(--muted-ink);
+
+  font-size: .88rem;
+  line-height: 1.45;
+}
+
+.install-prompt__benefits {
+  margin:
+    0
+    0
+    16px;
+  padding-left: 1.15rem;
+
+  color: var(--ink);
+
+  font-size: .78rem;
+  line-height: 1.55;
+}
+
+.install-prompt__actions {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+}
+
+.install-prompt__install,
+.install-prompt__later {
+  min-height: 44px;
+
+  padding:
+    0
+    14px;
+
+  font: inherit;
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .11em;
+
+  cursor: pointer;
+}
+
+.install-prompt__install {
+  border: 1px solid #531712;
+
+  color: #f4ecd8;
+  background: #6d1c17;
+}
+
+.install-prompt__later {
+  border: 1px solid rgba(117,96,68,.45);
+
+  color: var(--muted-ink);
+  background: transparent;
+}
+
+body.page-nocturne .install-prompt__card {
+  color: var(--ink);
+
+  background:
+    linear-gradient(
+      180deg,
+      #292219,
+      #1b1711
+    );
+
+  border-color: #655642;
+}
+
+body.page-nocturne .install-prompt__install {
+  background: #873b31;
+  border-color: #a85a4d;
+}
+
+@media (max-width: 430px) {
+  .install-prompt {
+    inset:
+      auto
+      8px
+      calc(76px + env(safe-area-inset-bottom))
+      8px;
+  }
+
+  .install-prompt__card {
+    padding:
+      19px
+      16px
+      15px;
+  }
+
+  .install-prompt__actions {
+    grid-template-columns:
+      minmax(0, 1fr)
+      auto;
+  }
+}
+
+
+/* =========================================================
+   INSTALL PROMPT DIMMING
+   ========================================================= */
+
+.install-prompt {
+  inset: 0;
+  align-items: flex-end;
+  padding:
+    0
+    12px
+    calc(82px + env(safe-area-inset-bottom));
+
+  pointer-events: auto;
+}
+
+.install-prompt__backdrop {
+  position: absolute;
+  inset: 0;
+
+  background:
+    rgba(8, 7, 5, .68);
+
+  backdrop-filter:
+    blur(2px);
+
+  -webkit-backdrop-filter:
+    blur(2px);
+}
+
+.install-prompt__card {
+  z-index: 1;
+}
+
+@media (max-width: 430px) {
+  .install-prompt {
+    padding:
+      0
+      8px
+      calc(76px + env(safe-area-inset-bottom));
+  }
+}
+
+
+/* =========================================================
+   FIRST-RUN GUIDED TUTORIAL
+   ========================================================= */
+
+.tutorial[hidden] {
+  display: none;
+}
+
+.tutorial {
+  position: fixed;
+  z-index: 1500;
+  inset: 0;
+
+  pointer-events: none;
+}
+
+/*
+  The huge outer shadow creates the dimmed screen while leaving
+  the selected control visible through the centre.
+*/
+.tutorial-spotlight {
+  position: fixed;
+  z-index: 1501;
+
+  border-radius: 8px;
+
+  box-shadow:
+    0 0 0 9999px rgba(8,7,5,.72),
+    0 0 0 2px rgba(232,220,193,.94),
+    0 0 24px rgba(232,220,193,.28);
+
+  transition:
+    top .18s ease,
+    left .18s ease,
+    width .18s ease,
+    height .18s ease;
+
+  pointer-events: none;
+}
+
+.tutorial-card {
+  position: fixed;
+  z-index: 1502;
+
+  width: min(360px, calc(100vw - 24px));
+
+  padding:
+    18px
+    18px
+    15px;
+
+  color: #19140d;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(250,246,237,.995),
+      rgba(232,220,193,.995)
+    );
+
+  border:
+    1px solid
+    rgba(117,96,68,.65);
+
+  border-radius: 4px;
+
+  box-shadow:
+    0 20px 55px rgba(0,0,0,.44),
+    inset 0 0 24px rgba(109,28,23,.035);
+
+  pointer-events: auto;
+}
+
+.tutorial-card::before {
+  content: "";
+
+  position: absolute;
+  inset: 5px;
+
+  border:
+    1px solid
+    rgba(117,96,68,.20);
+
+  pointer-events: none;
+}
+
+.tutorial-step {
+  margin:
+    0
+    0
+    5px;
+
+  color: #6d1c17;
+
+  font-size: .55rem;
+  font-weight: 700;
+  letter-spacing: .17em;
+}
+
+.tutorial-card h2 {
+  margin:
+    0
+    0
+    8px;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 1.3rem;
+  font-weight: 500;
+  line-height: 1.08;
+}
+
+.tutorial-copy {
+  margin:
+    0
+    0
+    14px;
+
+  color: #675947;
+
+  font-size: .84rem;
+  line-height: 1.48;
+}
+
+.tutorial-progress {
+  height: 2px;
+
+  margin:
+    0
+    0
+    13px;
+
+  overflow: hidden;
+
+  background:
+    rgba(117,96,68,.20);
+}
+
+.tutorial-progress span {
+  display: block;
+
+  width: 0;
+  height: 100%;
+
+  background: #6d1c17;
+
+  transition:
+    width .2s ease;
+}
+
+.tutorial-actions {
+  display: grid;
+
+  grid-template-columns:
+    auto
+    1fr
+    auto;
+
+  gap: 7px;
+}
+
+.tutorial-actions button {
+  min-height: 42px;
+
+  padding:
+    0
+    11px;
+
+  border:
+    1px solid
+    rgba(117,96,68,.42);
+
+  background: transparent;
+
+  color: #675947;
+
+  font: inherit;
+  font-size: .60rem;
+  font-weight: 700;
+  letter-spacing: .10em;
+}
+
+#tutorialSkip {
+  justify-self: start;
+
+  border-color: transparent;
+}
+
+#tutorialNext {
+  min-width: 84px;
+
+  border-color: #531712;
+
+  color: #f4ecd8;
+
+  background: #6d1c17;
+}
+
+body.page-nocturne .tutorial-card {
+  color: #ded2b9;
+
+  background:
+    linear-gradient(
+      180deg,
+      #292219,
+      #1b1711
+    );
+
+  border-color: #655642;
+}
+
+body.page-nocturne .tutorial-copy {
+  color: #9e9078;
+}
+
+body.page-nocturne .tutorial-step {
+  color: #bd6858;
+}
+
+body.page-nocturne #tutorialNext {
+  background: #873b31;
+  border-color: #a85a4d;
+}
+
+
+/* Narrow phone positioning safety. */
+
+@media (max-width: 430px) {
+  .tutorial-card {
+    width:
+      calc(100vw - 16px);
+
+    padding:
+      16px
+      15px
+      14px;
+  }
+
+  .tutorial-card h2 {
+    font-size: 1.18rem;
+  }
+
+  .tutorial-copy {
+    font-size: .80rem;
+  }
+}
+
+
+/* =========================================================
+   QUICK TOUR REPLAY
+   ========================================================= */
+
+.replay-tutorial-button {
+  width: 100%;
+  min-height: 44px;
+
+  padding: 0 14px;
+
+  border: 1px solid var(--rule);
+
+  color: var(--ink);
+  background: transparent;
+
+  font: inherit;
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+
+  cursor: pointer;
+}
+
+.replay-tutorial-button:hover,
+.replay-tutorial-button:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+}
