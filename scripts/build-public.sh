@@ -15,6 +15,12 @@ cp sw.js public/
 cp -r assets public/
 cp -r data public/
 
+# Android Trusted Web Activity verification
+if [ -d .well-known ]; then
+  mkdir -p public/.well-known
+  cp -r .well-known/. public/.well-known/
+fi
+
 echo
 echo "Bible Illuminated build complete."
 echo "Files:"
