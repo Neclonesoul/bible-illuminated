@@ -1,4 +1,5 @@
 <div align="center">
+<img width="1186" height="630" alt="social-preview-1200x630" src="https://github.com/user-attachments/assets/6e1ea3d6-bc31-4411-b446-0e4b00f1342f" />
 
 # ✦ Bible Illuminated ✦
 
@@ -241,6 +242,7 @@ Existing local user state is preserved independently, including:
 Existing users therefore **do not need to reinstall** Bible Illuminated when a new release is published.
 
 ---
+<img width="1188" height="400" alt="Screenshot_20260822_112954_Gallery" src="https://github.com/user-attachments/assets/6fdaaaeb-a391-4c9b-9532-818405fdfc1e" />
 
 ## Version 1.2.0
 
