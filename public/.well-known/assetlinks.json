@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "uk.co.tysonbarnes.bibleilluminated",
+      "sha256_cert_fingerprints": [
+        "C5:E9:C0:CC:0B:81:63:01:86:C4:F3:A2:B6:0E:98:C4:DB:95:48:60:04:F1:09:AA:98:71:5A:32:F8:A3:92:A3"
+      ]
+    }
+  }
+]
