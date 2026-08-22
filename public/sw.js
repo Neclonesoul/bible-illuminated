@@ -1,5 +1,4 @@
-// cache-bust: 2026-08-20-ui-recovery
-const VERSION = "bible-illuminated-v1.1.1";
+const VERSION = "bible-illuminated-v1.2.0";
 
 const SHELL_CACHE = `${VERSION}-shell`;
 const DATA_CACHE = `${VERSION}-data`;
@@ -16,16 +15,15 @@ const SHELL = [
 
   "/assets/js/app.js",
   "/assets/js/bible.js",
+  "/assets/js/router.js",
   "/assets/js/search.js",
-
-  "/assets/icons/icon.svg",
-
-  "/data/kjv/index.json",
-  "/data/kjv1611/index.json",
-
-  "/data/kjv/search.json",
-  "/data/kjv1611/search.json"
+  "/assets/js/storage.js"
 ];
+
+
+/* =========================================================
+   INSTALL
+   ========================================================= */
 
 self.addEventListener(
   "install",
@@ -43,6 +41,11 @@ self.addEventListener(
   }
 );
 
+
+/* =========================================================
+   ACTIVATE
+   ========================================================= */
+
 self.addEventListener(
   "activate",
   event => {
@@ -52,10 +55,12 @@ self.addEventListener(
         .then(keys =>
           Promise.all(
             keys
-              .filter(
-                key =>
-                  key !== SHELL_CACHE &&
-                  key !== DATA_CACHE
+              .filter(key =>
+                key.startsWith(
+                  "bible-illuminated-"
+                ) &&
+                key !== SHELL_CACHE &&
+                key !== DATA_CACHE
               )
               .map(key =>
                 caches.delete(key)
@@ -69,10 +74,92 @@ self.addEventListener(
   }
 );
 
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+
+async function cacheFirst(
+  request,
+  cacheName
+) {
+  const cache =
+    await caches.open(cacheName);
+
+  const cached =
+    await cache.match(request);
+
+  if (cached) {
+    return cached;
+  }
+
+  const response =
+    await fetch(request);
+
+  if (response.ok) {
+    await cache.put(
+      request,
+      response.clone()
+    );
+  }
+
+  return response;
+}
+
+
+async function networkFirst(
+  request,
+  cacheName,
+  fallback = null
+) {
+  const cache =
+    await caches.open(cacheName);
+
+  try {
+    const response =
+      await fetch(request);
+
+    if (response.ok) {
+      await cache.put(
+        request,
+        response.clone()
+      );
+    }
+
+    return response;
+  } catch {
+    const cached =
+      await cache.match(request);
+
+    if (cached) {
+      return cached;
+    }
+
+    if (fallback) {
+      const fallbackResponse =
+        await cache.match(fallback);
+
+      if (fallbackResponse) {
+        return fallbackResponse;
+      }
+    }
+
+    throw new Error(
+      "Network and cache unavailable"
+    );
+  }
+}
+
+
+/* =========================================================
+   FETCH POLICY
+   ========================================================= */
+
 self.addEventListener(
   "fetch",
   event => {
-    const request = event.request;
+    const request =
+      event.request;
 
     if (request.method !== "GET") {
       return;
@@ -81,102 +168,116 @@ self.addEventListener(
     const url =
       new URL(request.url);
 
-    if (url.origin !== self.location.origin) {
+    if (
+      url.origin !== self.location.origin
+    ) {
       return;
     }
 
-    // Bible JSON:
-    // cache-first, then network.
-    if (url.pathname.startsWith("/data/")) {
+    /*
+      Scripture data remains offline-first.
+    */
+    if (
+      url.pathname.startsWith("/data/")
+    ) {
       event.respondWith(
-        caches
-          .open(DATA_CACHE)
-          .then(async cache => {
-            const cached =
-              await cache.match(request);
-
-            if (cached) {
-              return cached;
-            }
-
-            const response =
-              await fetch(request);
-
-            if (response.ok) {
-              cache.put(
-                request,
-                response.clone()
-              );
-            }
-
-            return response;
-          })
+        cacheFirst(
+          request,
+          DATA_CACHE
+        )
       );
 
       return;
     }
 
-    // Application shell:
-    // cache-first.
+    /*
+      HTML/navigation is network-first.
+    */
+    if (
+      request.mode === "navigate"
+    ) {
+      event.respondWith(
+        networkFirst(
+          request,
+          SHELL_CACHE,
+          "/index.html"
+        )
+      );
+
+      return;
+    }
+
+    /*
+      App code/styles/manifest are network-first
+      so online users receive new releases quickly.
+    */
+    if (
+      url.pathname.startsWith("/assets/") ||
+      url.pathname === "/app.webmanifest"
+    ) {
+      event.respondWith(
+        networkFirst(
+          request,
+          SHELL_CACHE
+        )
+      );
+
+      return;
+    }
+
     event.respondWith(
-      caches
-        .match(request)
-        .then(cached => {
-          if (cached) {
-            return cached;
-          }
-
-          return fetch(request)
-            .then(response => {
-              if (!response.ok) {
-                return response;
-              }
-
-              const copy =
-                response.clone();
-
-              caches
-                .open(SHELL_CACHE)
-                .then(cache =>
-                  cache.put(
-                    request,
-                    copy
-                  )
-                );
-
-              return response;
-            });
-        })
+      networkFirst(
+        request,
+        SHELL_CACHE
+      )
     );
   }
 );
 
-self.addEventListener("message", event => {
-  if (!event.data) {
-    return;
-  }
 
-  if (event.data.type === "CACHE_OFFLINE_LIBRARY") {
+/* =========================================================
+   OFFLINE LIBRARY
+   ========================================================= */
+
+self.addEventListener(
+  "message",
+  event => {
+    if (
+      !event.data ||
+      event.data.type !==
+        "CACHE_OFFLINE_LIBRARY"
+    ) {
+      return;
+    }
+
     event.waitUntil(
-      cacheOfflineLibrary(event.source)
+      cacheOfflineLibrary(
+        event.source
+      )
     );
   }
-});
+);
 
-async function cacheOfflineLibrary(client) {
-  const cache = await caches.open(DATA_CACHE);
+
+async function cacheOfflineLibrary(
+  client
+) {
+  const cache =
+    await caches.open(DATA_CACHE);
 
   const editions = [
     "kjv",
     "kjv1611"
   ];
 
-  let urls = [];
+  const urls = [];
 
   for (const edition of editions) {
-    const response = await fetch(
-      `/data/${edition}/index.json`
-    );
+    const indexUrl =
+      `/data/${edition}/index.json`;
+
+    const response =
+      await fetch(indexUrl);
 
     if (!response.ok) {
       throw new Error(
@@ -184,10 +285,11 @@ async function cacheOfflineLibrary(client) {
       );
     }
 
-    const books = await response.json();
+    const books =
+      await response.json();
 
     urls.push(
-      `/data/${edition}/index.json`,
+      indexUrl,
       `/data/${edition}/search.json`
     );
 
@@ -201,13 +303,15 @@ async function cacheOfflineLibrary(client) {
   let completed = 0;
 
   for (const url of urls) {
-    const request = new Request(url);
+    const request =
+      new Request(url);
 
     const existing =
       await cache.match(request);
 
     if (!existing) {
-      const response = await fetch(request);
+      const response =
+        await fetch(request);
 
       if (!response.ok) {
         throw new Error(
@@ -224,14 +328,16 @@ async function cacheOfflineLibrary(client) {
     completed++;
 
     client?.postMessage({
-      type: "OFFLINE_LIBRARY_PROGRESS",
+      type:
+        "OFFLINE_LIBRARY_PROGRESS",
       completed,
       total: urls.length
     });
   }
 
   client?.postMessage({
-    type: "OFFLINE_LIBRARY_COMPLETE",
+    type:
+      "OFFLINE_LIBRARY_COMPLETE",
     total: urls.length
   });
 }

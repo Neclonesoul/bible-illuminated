@@ -1188,6 +1188,42 @@ if (
 }
 
 
+
+/* =========================================================
+   SERVICE WORKER UPDATE LIFECYCLE
+   ========================================================= */
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener(
+    "load",
+    async () => {
+      try {
+        const registration =
+          await navigator.serviceWorker.ready;
+
+        await registration.update();
+      } catch {
+        /* Offline startup remains valid. */
+      }
+    }
+  );
+
+  let refreshing = false;
+
+  navigator.serviceWorker.addEventListener(
+    "controllerchange",
+    () => {
+      if (refreshing) {
+        return;
+      }
+
+      refreshing = true;
+
+      window.location.reload();
+    }
+  );
+}
+
 /* =========================================================
    PWA INSTALL PROMPT
    ========================================================= */
