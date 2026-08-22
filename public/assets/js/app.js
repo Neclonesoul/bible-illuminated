@@ -1262,6 +1262,7 @@ function hideInstallPrompt({
   }
 
   installPrompt.hidden = true;
+  installPromptVisible = false;
 
   if (remember) {
     localStorage.setItem(
@@ -1283,13 +1284,39 @@ function showInstallPrompt() {
   }
 
   installPrompt.hidden = false;
+  installPromptVisible = true;
 }
+
+let installPromptAvailable = false;
+let installPromptVisible = false;
+
+function scheduleTutorialFallback() {
+  window.setTimeout(
+    () => {
+      if (
+        !installPromptAvailable &&
+        !installPromptVisible &&
+        !tutorialCompleted() &&
+        !isStandalone()
+      ) {
+        startTutorial();
+      }
+    },
+    2600
+  );
+}
+
+window.addEventListener(
+  "load",
+  scheduleTutorialFallback
+);
 
 window.addEventListener(
   "beforeinstallprompt",
   event => {
     event.preventDefault();
 
+    installPromptAvailable = true;
     deferredInstallPrompt = event;
 
     window.setTimeout(
