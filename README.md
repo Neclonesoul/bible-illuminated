@@ -39,7 +39,7 @@
 
 The production instance is available at:
 
-### **https://bible-illuminated.barnestyson.workers.dev/**
+### **https://kjv.tysonbarnes.co.uk/**
 
 No account is required. Use it directly in the browser or install it as a Progressive Web App for a focused, standalone reading environment.
 
