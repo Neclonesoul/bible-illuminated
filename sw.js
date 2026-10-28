@@ -253,7 +253,11 @@ self.addEventListener(
     event.waitUntil(
       cacheOfflineLibrary(
         event.source
-      )
+      ).catch(() => {
+        event.source?.postMessage({
+          type: "OFFLINE_LIBRARY_ERROR"
+        });
+      })
     );
   }
 );

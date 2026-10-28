@@ -2,6 +2,9 @@
 
 ## Automated Checks
 
+Run `npm test` for repeatable regression and data-completeness checks. See
+`TEST-RESULTS-2026-10-28.md` for completed checks and outstanding acceptance work.
+
 ```bash
 for file in assets/js/*.js; do
   node --check "$file" || exit 1

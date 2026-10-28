@@ -7,7 +7,8 @@
       "namespace": "android_app",
       "package_name": "uk.co.tysonbarnes.bibleilluminated",
       "sha256_cert_fingerprints": [
-        "C5:E9:C0:CC:0B:81:63:01:86:C4:F3:A2:B6:0E:98:C4:DB:95:48:60:04:F1:09:AA:98:71:5A:32:F8:A3:92:A3"
+        "C5:E9:C0:CC:0B:81:63:01:86:C4:F3:A2:B6:0E:98:C4:DB:95:48:60:04:F1:09:AA:98:71:5A:32:F8:A3:92:A3",
+        "DB:75:A1:83:D9:61:3A:B9:26:A7:24:D4:52:A6:3D:4E:B3:56:EC:D6:82:DB:E7:E2:AB:20:21:EC:2F:AA:F5:8C"
       ]
     }
   }

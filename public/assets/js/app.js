@@ -1152,6 +1152,13 @@ if ("serviceWorker" in window.navigator) {
           `Downloading complete library… ${percent}%`;
       }
 
+      if (data.type === "OFFLINE_LIBRARY_ERROR") {
+        offlineLibraryStatus.textContent =
+          "Download interrupted. Check your connection and available storage, then retry. Saved books will be kept.";
+        offlineLibraryButton.textContent = "RETRY OFFLINE DOWNLOAD";
+        offlineLibraryButton.disabled = false;
+      }
+
       if (
         data.type ===
         "OFFLINE_LIBRARY_COMPLETE"
