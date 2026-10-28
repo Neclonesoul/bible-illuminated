@@ -19,12 +19,12 @@ export function parseRoute() {
   return {
     book,
     chapter:
-      Number.isFinite(chapter) &&
+      Number.isSafeInteger(chapter) &&
       chapter > 0
         ? chapter
         : null,
     verse:
-      Number.isFinite(verse) &&
+      Number.isSafeInteger(verse) &&
       verse > 0
         ? verse
         : null,
