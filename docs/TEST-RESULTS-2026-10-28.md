@@ -24,3 +24,9 @@ Status: partial; not approved for release.
 - Play Console: verify internal release status, tester access, app-signing fingerprint and pre-launch report. No console inspection or Android device testing was performed; no device was connected.
 
 Do not mark unchecked Android acceptance items as passed based on website or source tests.
+
+## Google Play follow-up
+
+Internal track is active with version code 1 (1.0.0); the selected tester list has four entries. No pre-launch report is available. Closed Alpha remains draft, with zero opted-in closed testers. Production eligibility requires 12 testers for 14 continuous days, as shown in this account.
+
+The current Play signing fingerprint (DB:75:…:F5:8C) is absent from the production assetlinks.json. Added the exact console-provided fingerprint to both source copies while preserving the existing fingerprint. Deployment and actual-device verification remain outstanding.
